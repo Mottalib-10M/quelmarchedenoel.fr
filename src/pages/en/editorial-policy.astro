@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, REVIEW_CYCLE_MONTHS, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { displayDate } from '../../lib/format';
+const lang = 'en';
+---
+<PageLayout title={`Editorial policy of ${SITE_NAMES[lang]}: sources and errors`} description="Where the Christmas market dates and hours on Quel Marché de Noël come from, which source wins when they disagree, and how a reported mistake is checked and corrected." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Editorial policy</h1>
+    <p>A wrong date means a wasted trip. This page says where each piece of information comes from and what happens when it is wrong.</p>
+    <h2>Who is responsible</h2><p>{AUTHOR_NAME} is responsible for the content and the finder. Contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Sources, in order</h2>
+    <ol>
+      <li><strong>The organiser's or the town's page</strong>, when we have read it: it wins;</li>
+      <li><strong>The DATAtourisme listing</strong> entered by the tourist office, used as it is (dates, days, hours, address, free entry);</li>
+      <li><strong>geo.api.gouv.fr</strong> for the centre of the towns used as starting points.</li>
+    </ol>
+    <p>We take no date or time from the press, social networks or directories. A time missing from the listing shows as "not published", never guessed.</p>
+    <h2>Updates</h2>
+    <p>The DATAtourisme export is read by hand, then the site is rebuilt; no update runs on its own. Last reading: {displayDate(LAST_UPDATED, 'en-GB')}. Full review at least every {REVIEW_CYCLE_MONTHS} months and before each season.</p>
+    <h2>Corrections</h2>
+    <p>Every report is checked against the organiser's page. A confirmed correction goes into the file of hand-checked listings, with its source and reading date.</p>
+    <h2>Independence</h2>
+    <p>This site is not a tourist office or an organiser. It sells no pitch, ranks no market for money and collects no contact details.</p>
+    <p>See also <a href={route('about', lang)}>about</a> and the <a href={route('method', lang)}>method</a>.</p>
+  </div>
+</PageLayout>

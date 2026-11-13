@@ -1,0 +1,26 @@
+---
+/**
+ * L'outil d'une page : le chercheur de marchés, réglé pour elle. Seuls les marchés de la zone de la page partent dans
+ * le HTML ; toute ville choisie hors zone charge /data/marches.json à la demande.
+ */
+import Finder from './noel/Finder';
+import { route } from '../i18n/routes';
+import { MARCHES, VILLES, leger, autour, jours, JOUR_REPERE, region, ville as villeDe } from '../lib/data';
+import type { OutilArg } from '../lib/page-types';
+import type { Lang } from '../lib/format';
+interface Props { arg: OutilArg; lang: Lang; idPrefix?: string; complet?: boolean; titre?: string }
+const { arg, lang, idPrefix = 't', complet = false, titre } = Astro.props;
+const v = VILLES.find((x) => x.insee === arg.ville)!;
+if (!v) throw new Error(`ville de départ inconnue : ${arg.ville}`);
+const zone = arg.zone ?? 50;
+const R = arg.region ? region(arg.region) : null;
+const sousListe = complet ? autour(v, zone) : R ? MARCHES.filter((m) => R.deps.includes(m.d)) : autour(v, zone);
+// Villes proposées : celles de la région, ou celles à moins de 40 km ; toutes sur l'accueil (fichier complet).
+// Toutes les villes sont proposées : hors de la zone de la page, le chercheur charge le fichier complet.
+const villes = VILLES
+  .map((x) => ({ k: x.insee, n: x.n, la: x.la, lo: x.lo }));
+if (!villes.some((x) => x.k === v.insee)) villes.unshift({ k: v.insee, n: v.n, la: v.la, lo: v.lo });
+---
+<Finder client:load lang={lang} marches={leger(sousListe)} villes={villes} ville={v.insee} rayon={arg.rayon ?? 30} jour={arg.jour ?? JOUR_REPERE}
+  filtre={arg.filtre ?? 'tous'} jours={jours()} aujourdhui={arg.aujourdhui ?? !arg.jour} complet="/data/marches.json"
+  zone={R ? 0 : zone} methodHref={route('method', lang)} idPrefix={idPrefix} titre={titre} />

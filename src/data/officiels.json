@@ -1,0 +1,137 @@
+{
+ "_note": "Marchés absents de DATAtourisme au 2026-11-13, relus à la main sur la page officielle citée (champ « source », date de lecture « lu »). Coordonnées : centre de la commune (geo.api.gouv.fr), pas l'emplacement exact des chalets.",
+ "marches": [
+  {
+   "id": "off-strasbourg",
+   "n": "Marché de Noël de Strasbourg (Christkindelsmärik et marchés du centre)",
+   "c": "Strasbourg",
+   "cp": "67000",
+   "insee": "67482",
+   "d": "67",
+   "r": "grand-est",
+   "la": 48.5691,
+   "lo": 7.7621,
+   "s": "2026-11-27",
+   "e": "2026-12-24",
+   "o": [
+    [
+     "2026-11-27",
+     "2026-11-27",
+     127,
+     "14:00",
+     "21:00"
+    ],
+    [
+     "2026-11-28",
+     "2026-12-10",
+     127,
+     "11:30",
+     "21:00"
+    ],
+    [
+     "2026-12-11",
+     "2026-12-12",
+     127,
+     "11:30",
+     "22:00"
+    ],
+    [
+     "2026-12-13",
+     "2026-12-17",
+     127,
+     "11:30",
+     "21:00"
+    ],
+    [
+     "2026-12-18",
+     "2026-12-19",
+     127,
+     "11:30",
+     "22:00"
+    ],
+    [
+     "2026-12-20",
+     "2026-12-23",
+     127,
+     "11:30",
+     "21:00"
+    ],
+    [
+     "2026-12-24",
+     "2026-12-24",
+     127,
+     "11:30",
+     "18:00"
+    ]
+   ],
+   "h": [],
+   "f": null,
+   "w": "https://noel.strasbourg.eu/foire-aux-questions",
+   "org": "Ville et Eurométropole de Strasbourg",
+   "u": "2026-11-13",
+   "src": "off",
+   "source": "https://noel.strasbourg.eu/foire-aux-questions",
+   "lu": "2026-11-13",
+   "lieu": "Place Broglie, place de la Cathédrale, place Kléber et 5 autres places de la Grande Île"
+  },
+  {
+   "id": "off-lille",
+   "n": "Village de Noël de Lille",
+   "c": "Lille",
+   "cp": "59000",
+   "insee": "59350",
+   "d": "59",
+   "r": "hauts-de-france",
+   "la": 50.6311,
+   "lo": 3.0468,
+   "s": "2026-11-18",
+   "e": "2026-12-30",
+   "o": [
+    [
+     "2026-11-18",
+     "2026-12-23",
+     79,
+     "11:00",
+     "20:30"
+    ],
+    [
+     "2026-11-18",
+     "2026-12-23",
+     48,
+     "11:00",
+     "22:00"
+    ],
+    [
+     "2026-12-24",
+     "2026-12-24",
+     127,
+     "11:00",
+     "18:00"
+    ],
+    [
+     "2026-12-26",
+     "2026-12-30",
+     79,
+     "11:00",
+     "20:30"
+    ],
+    [
+     "2026-12-26",
+     "2026-12-30",
+     48,
+     "11:00",
+     "22:00"
+    ]
+   ],
+   "h": [],
+   "f": null,
+   "w": "https://www.lille.fr/Actualites/Village-de-Noel-de-Lille-2026",
+   "org": "Ville de Lille",
+   "u": "2026-11-13",
+   "src": "off",
+   "source": "https://www.lille.fr/Actualites/Village-de-Noel-de-Lille-2026",
+   "lu": "2026-11-13",
+   "lieu": "Place Rihour (métro Rihour, ligne 1)"
+  }
+ ]
+}

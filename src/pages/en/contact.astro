@@ -1,0 +1,20 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { CONTACT_EMAIL, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { contactPageSchema } from '../../lib/seo';
+const lang = 'en';
+const description = 'Write to us if a Christmas market date, opening time or place looks wrong, if a market is missing, or to embed the finder. We do not rent stalls or sell tickets.';
+---
+<PageLayout title={`Contact ${SITE_NAMES[lang]}: report a mistake`} description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Contact', description, path: route('contact', lang), lang })]} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>A wrong date or time, a missing market</h2>
+    <p>Tell us the market, the town and, if you can, the organiser's page with the right information. We check at the source before changing anything. An organiser can also correct its listing with its tourist office: it is picked up at the next update.</p>
+    <h2>Exhibitors and organisers</h2>
+    <p>We allocate no pitches and sell no visibility. To exhibit, contact the market organiser or the town hall.</p>
+    <h2>Embed the finder</h2>
+    <p>Hotels, holiday lets, town halls and clubs can embed it for free: <a href={route('widget', lang)}>how to</a>.</p>
+  </div>
+</PageLayout>

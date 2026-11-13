@@ -1,0 +1,26 @@
+{
+ "_lisezmoi": "Sources et date de lecture du site. Les marchés eux-mêmes sont dans marches.json (scripts/import-datatourisme.py) ; les fiches relues à la main dans officiels.json.",
+ "year": 2026,
+ "retrieved_at": "2026-11-13",
+ "valid_from": "2026-11-13",
+ "valid_to": "2027-01-10",
+ "datatourisme": { "export": "evenements.json.gz", "taille_octets": 100708070, "derniere_modification": "2026-11-12", "licence": "Licence Ouverte Etalab 2.0" },
+ "sources": {
+  "datagouv": { "url": "https://www.data.gouv.fr/datasets/donnees-touristiques-de-la-base-datatourisme", "label": { "fr": "data.gouv.fr : données touristiques de la base DATAtourisme (Licence Ouverte), export du 12 novembre 2026", "en": "data.gouv.fr: tourism data from the DATAtourisme base (Licence Ouverte), export of 12 November 2026 (in French)" } },
+  "datatourisme": { "url": "https://www.datatourisme.fr/", "label": { "fr": "DATAtourisme, la base nationale des données des offices de tourisme (ADN Tourisme)", "en": "DATAtourisme, the national database of French tourist offices (ADN Tourisme, in French)" } },
+  "licence": { "url": "https://www.etalab.gouv.fr/licence-ouverte-open-licence/", "label": { "fr": "Etalab : Licence Ouverte / Open Licence 2.0", "en": "Etalab: Licence Ouverte / Open Licence 2.0" } },
+  "geoapi": { "url": "https://geo.api.gouv.fr/decoupage-administratif/communes", "label": { "fr": "geo.api.gouv.fr : centres et population des communes (points de départ)", "en": "geo.api.gouv.fr: town centres and population (starting points, in French)" } },
+  "strasbourg-accueil": { "url": "https://noel.strasbourg.eu/", "label": { "fr": "Ville de Strasbourg : Strasbourg Capitale de Noël, page d'accueil (lue le 13 novembre 2026)", "en": "City of Strasbourg: Strasbourg Capital of Christmas, home page (read on 13 November 2026, in French)" } },
+  "strasbourg": { "url": "https://noel.strasbourg.eu/foire-aux-questions", "label": { "fr": "Ville de Strasbourg : foire aux questions du marché de Noël 2026 (lue le 13 novembre 2026)", "en": "City of Strasbourg: 2026 Christmas market FAQ (read on 13 November 2026, in French)" } },
+  "lille": { "url": "https://www.lille.fr/Actualites/Village-de-Noel-de-Lille-2026", "label": { "fr": "Ville de Lille : Village de Noël de Lille 2026 (lu le 13 novembre 2026)", "en": "City of Lille: Lille Christmas Village 2026 (read on 13 November 2026, in French)" } },
+  "kaysersberg": { "url": "https://www.kaysersberg.com/visiter/noel-dans-la-vallee-de-kaysersberg/", "label": { "fr": "Office de tourisme de la vallée de Kaysersberg : Noël dans la vallée", "en": "Kaysersberg valley tourist office: Christmas in the valley (in French)" } },
+  "colmar": { "url": "http://www.noel-colmar.com/", "label": { "fr": "Office de tourisme de Colmar : Noël à Colmar", "en": "Colmar tourist office: Christmas in Colmar" } },
+  "reims": { "url": "https://www.reims.fr/la-ville-de-reims/festivals-et-evenements/le-marche-de-noel-de-reims", "label": { "fr": "Ville de Reims : le marché de Noël de Reims", "en": "City of Reims: the Reims Christmas market (in French)" } },
+  "metz": { "url": "https://www.tourisme-metz.com/fr/actualites/noel/noel-a-metz-marche-merveilleux-reservez-votre-sejour", "label": { "fr": "Inspire Metz, office de tourisme : Noël à Metz", "en": "Inspire Metz tourist office: Christmas in Metz (in French)" } },
+  "mulhouse": { "url": "http://www.noel-mulhouse.fr/", "label": { "fr": "Marché de Noël de Mulhouse, site de l'office de tourisme", "en": "Mulhouse Christmas market, tourist office site (in French)" } },
+  "toulouse": { "url": "http://www.marchedenoeltoulouse.fr/", "label": { "fr": "Marché de Noël de Toulouse, site des organisateurs", "en": "Toulouse Christmas market, organisers' site (in French)" } },
+  "amiens": { "url": "https://fr.marchedenoel.fr/", "label": { "fr": "Marché de Noël d'Amiens, site cité par l'office de tourisme", "en": "Amiens Christmas market, site listed by the tourist office (in French)" } },
+  "montpellier": { "url": "https://www.montpellier.fr/", "label": { "fr": "Ville de Montpellier", "en": "City of Montpellier (in French)" } },
+  "caen": { "url": "https://www.marchenoelcaen.fr/", "label": { "fr": "Le Grand Noël à Caen, site cité par l'office de tourisme", "en": "Le Grand Noël in Caen, site listed by the tourist office (in French)" } }
+ }
+}

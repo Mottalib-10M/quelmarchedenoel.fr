@@ -1,0 +1,98 @@
+---
+/**
+ * Accueil : le chercheur sur toute la France en tête, la réponse en un paragraphe replié, les six questions qui mènent
+ * chacune à sa page, la saison en chiffres, les régions, les explications en accordéons, toutes les pages.
+ * Texte : src/content/home.ts.
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import Clamp from './Clamp.astro';
+import Tool from './Tool.astro';
+import { HOME } from '../content/home';
+import { route, hasRoute, type Locale } from '../i18n/routes';
+import { GROUPS } from '../i18n/nav';
+import { t } from '../i18n/ui';
+import { sourceList } from '../lib/helpers';
+import { GUIDES } from '../lib/pages';
+import { REGIONS, MARCHES } from '../lib/data';
+import { avecHoraires, ouverts, ouvertsApres } from '../lib/blocs';
+import { formatNumber } from '../lib/format';
+import { faqSchema, organizationSchema, websiteSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const x = HOME[lang];
+const path = route('home', lang);
+const sources = sourceList(HOME.sources, lang);
+const jsonLd = [websiteSchema(lang), organizationSchema(lang), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), faqSchema(x.faqs, lang)];
+const ui = t(lang);
+const L = (fr: string, en: string) => (lang === 'fr' ? fr : en);
+const n = (v: number) => formatNumber(v, 0, lang);
+const regions = REGIONS.map((r) => { const l = MARCHES.filter((m) => r.deps.includes(m.d)); return { r, l }; }).sort((a, b) => b.l.length - a.l.length);
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={x.faqs} sources={sources}>
+  <header class="mb-4">
+    <h1 class="text-[1.7rem] font-bold text-navy-900 max-sm:leading-tight sm:text-3xl md:text-4xl">{x.h1}</h1>
+    <p class="mt-2 text-base text-navy-700 sm:text-lg">{x.intro}</p>
+    <div class="mt-1 text-xs font-medium uppercase tracking-wide text-navy-500">{ui.independent}</div>
+  </header>
+  <div id="simulateur" data-outil data-chrome class="scroll-mt-20"><Tool arg={{ ville: '67482', rayon: 30, zone: 40 }} lang={lang} idPrefix="home" complet /></div>
+  <p class="mt-2 text-sm text-navy-600" data-chrome>{ui.privacyLine}</p>
+  <Clamp text={x.resume} lang={lang} id="clamp-home" class="my-8" />
+  <section class="mt-8" aria-labelledby="questions-h" data-chrome>
+    <h2 id="questions-h" class="text-2xl font-bold text-navy-900">{x.questionsTitle}</h2>
+    <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+      {x.questions.filter((q) => hasRoute(q.id, lang)).map((q) => (
+        <li><a href={route(q.id, lang)} class="block h-full rounded-lg border-2 border-accent-500 bg-white px-4 py-3 hover:bg-accent-50"><span class="font-semibold text-accent-700">{q.q} →</span><span class="mt-1 block text-sm text-navy-700">{q.a}</span></a></li>
+      ))}
+    </ul>
+  </section>
+  <section class="mt-10">
+    <h2 class="text-2xl font-bold text-navy-900">{x.chiffresTitle}</h2>
+    <div class="mt-4 overflow-x-auto">
+      <table class="journal w-full text-sm">
+        <thead><tr><th scope="col" class="px-3 py-2 text-left font-semibold text-navy-900">{L('Saison 2026', '2026 season')}</th><th scope="col" class="px-3 py-2 text-right font-semibold text-navy-900">{L('Marchés', 'Markets')}</th></tr></thead>
+        <tbody>{x.chiffres.map(([k, v]) => <tr><td class="border-b border-navy-100 px-3 py-2 text-navy-800">{k}</td><td class="tabular-nums border-b border-navy-100 px-3 py-2 text-right font-semibold text-navy-900">{v}</td></tr>)}</tbody>
+      </table>
+    </div>
+    <p class="mt-2 text-sm text-navy-600">{x.chiffresNote}</p>
+  </section>
+  <section class="mt-10">
+    <h2 class="text-2xl font-bold text-navy-900">{x.regionsTitle}</h2>
+    <div class="mt-4 overflow-x-auto">
+      <table class="journal w-full text-sm empile">
+        <thead><tr>{[L('Région', 'Region'), L('Marchés', 'Markets'), L('Avec horaires', 'With hours'), L('Ouverts le 5 déc.', 'Open 5 Dec'), L('Ouverts après Noël', 'Open after Christmas')].map((th, i) => <th scope="col" class={`px-3 py-2 font-semibold text-navy-900 ${i ? 'text-right' : 'text-left'}`}>{th}</th>)}</tr></thead>
+        <tbody>{regions.map(({ r, l }) => (
+          <tr>
+            <td data-label={L('Région', 'Region')} class="border-b border-navy-100 px-3 py-2 text-navy-800">{hasRoute(r.id, lang) ? <a href={route(r.id, lang)} class="text-accent-700 underline">{r[lang]}</a> : r[lang]}</td>
+            <td data-label={L('Marchés', 'Markets')} class="tabular-nums border-b border-navy-100 px-3 py-2 text-right text-navy-900">{n(l.length)}</td>
+            <td data-label={L('Avec horaires', 'With hours')} class="tabular-nums border-b border-navy-100 px-3 py-2 text-right text-navy-900">{n(avecHoraires(l).length)}</td>
+            <td data-label={L('Ouverts le 5 déc.', 'Open 5 Dec')} class="tabular-nums border-b border-navy-100 px-3 py-2 text-right text-navy-900">{n(ouverts(l, '2026-12-05').length)}</td>
+            <td data-label={L('Ouverts après Noël', 'Open after Christmas')} class="tabular-nums border-b border-navy-100 px-3 py-2 text-right text-navy-900">{n(ouvertsApres(l, '2026-12-26').length)}</td>
+          </tr>))}</tbody>
+      </table>
+    </div>
+    <p class="mt-2 text-sm text-navy-600">{x.regionsNote}</p>
+  </section>
+  <section class="mt-10">
+    <h2 class="text-2xl font-bold text-navy-900">{x.foldTitle}</h2>
+    <div class="mt-3">
+      {x.folds.map((fo) => (
+        <details class="fold">
+          <summary><h3 class="fold-h">{fo.h}</h3></summary>
+          <div class="prose prose-slate max-w-none pb-2" set:html={fo.html} />
+        </details>
+      ))}
+    </div>
+  </section>
+  <section class="mt-10" data-chrome>
+    <h2 class="text-2xl font-bold text-navy-900">{x.guidesTitle}</h2>
+    {GROUPS.map((g) => (
+      <div class="mt-5">
+        <h3 class="text-lg font-semibold text-navy-900">{g.label[lang]}</h3>
+        <ul class="mt-2 grid gap-2 text-sm md:grid-cols-3">
+          {GUIDES.filter((p) => p.group === g.id && hasRoute(p.id, lang)).map((p) => <li><a href={route(p.id, lang)} class="block h-full rounded-lg border border-navy-200 px-3 py-2 hover:border-accent-300 hover:bg-accent-50"><span class="font-semibold text-accent-700 underline underline-offset-2">{p[lang].nav} →</span><span class="block text-navy-600">{p[lang].card}</span></a></li>)}
+        </ul>
+      </div>
+    ))}
+    <p class="mt-6 text-sm text-navy-700"><a href={route('method', lang)} class="font-medium text-accent-700 underline">{L('D\'où viennent les dates et comment le chercheur calcule', 'Where the dates come from and how the finder works')}</a> · <a href={route('about', lang)} class="font-medium text-accent-700 underline">{L('Qui publie ce site', 'Who publishes this site')}</a></p>
+  </section>
+</PageLayout>

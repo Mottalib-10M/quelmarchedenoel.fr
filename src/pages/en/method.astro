@@ -1,0 +1,30 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { route } from '../../i18n/routes';
+import { srcLink } from '../../lib/helpers';
+import { STATS, MARCHES } from '../../lib/data';
+import { breadcrumbSchema, webPageSchema } from '../../lib/seo';
+import { displayDate, formatNumber } from '../../lib/format';
+const lang = 'en';
+const path = route('method', lang);
+const title = 'Christmas market data 2026: sources, method, calculations';
+const description = 'How Quel Marché de Noël finds the markets open on a day: DATAtourisme export of 12 November 2026, official city pages, opening rules, distance and limits.';
+const s = (k: string, t: string) => srcLink(k, lang, t);
+const n = (x: number) => formatNumber(x, 0, lang);
+const off = MARCHES.filter((m) => m.src === 'off').map((m) => m.c).join(' and ');
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: 'Method', description, path, lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Method', path }])]} breadcrumbs={[{ label: 'Method' }]}>
+  <article class="prose prose-slate max-w-none">
+    <h1>Quel Marché de Noël method: where the dates come from</h1>
+    <p>The Quel Marché de Noël method starts from the public export of <Fragment set:html={s('datatourisme', 'DATAtourisme')} />, downloaded from <Fragment set:html={s('datagouv', 'data.gouv.fr')} /> and read on {displayDate(STATS.lu_le, 'en-GB')}: {n(STATS.evenements)} events entered by French tourist offices, of which we keep those whose name speaks of a Christmas market, village or "féerie" and that are not over. That leaves {n(STATS.datatourisme)} listings in {n(STATS.communes)} towns, plus {n(STATS.officiels)} markets read on their city's official page ({off}), which are missing from the base.</p>
+    <div class="not-prose text-xs font-medium uppercase tracking-wide text-navy-500">Independent site: not a tourist office or an organiser</div>
+    <h2>Open or closed on a given day</h2>
+    <p>Each listing gives the periods when the market runs and, often, the days of the week and the hours. A market counts as open on a day if one of its periods covers that date and that weekday. The hours shown are those of the listing for that exact day; {n(STATS.avec_horaires)} listings give some. Without hours, the finder says "not published": we do not guess. Listings whose name announces a concert, an exhibition, fireworks or an opening ceremony are left out ({n(STATS.exclus['pas un marché'])} this season): they are events around a market, not the market. Only one correction is made to dates: when a period starts the year before it ends and lasts more than 200 days, we read it as a year typo ({n(STATS.annee_corrigee)} listing this season, the one for Tours, entered as "27 November 2025 to 27 December 2026").</p>
+    <h2>Distance and "open now"</h2>
+    <p>Distance is measured as the crow flies between the centre of the starting town (<Fragment set:html={s('geoapi', 'geo.api.gouv.fr')} />) or your location and the listing's coordinates. By road, allow about a third more. When the chosen day is today, your device's clock tells whether each market is open, opens later or has closed. Your location never leaves your browser.</p>
+    <h2>Limits</h2>
+    <p>A listing is only as good as the tourist office keeps it; an organiser can cancel for bad weather or change a time. Some cities (Lyon, Bordeaux, Paris, Nantes, Marseille) do not publish their markets in DATAtourisme and had no readable 2026 date on their sites on {displayDate(STATS.lu_le, 'en-GB')}: they have no page. Sorting by distance says nothing about a market's size. Automated tests check days, time slots and distances on real listings; the site does not build if one fails.</p>
+    <h2>How the Quel Marché de Noël method is kept up to date</h2>
+    <p>The import script is run by hand on a new export, then the site is rebuilt; there is no automatic update. Listings read on official pages carry their reading date. DATAtourisme data is reused under the <Fragment set:html={s('licence', 'Licence Ouverte 2.0')} />, with the source credited. Report a mistake through the <a href={route('contact', lang)}>contact</a> page; how we correct is set out in the <a href={route('editorial', lang)}>editorial policy</a>.</p>
+  </article>
+</PageLayout>

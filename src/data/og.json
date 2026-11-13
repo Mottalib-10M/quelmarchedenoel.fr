@@ -1,0 +1,20 @@
+{
+ "accent": "#9B1C2C",
+ "symbol": "★",
+ "variants": [
+  {
+   "file": "og-fr.png",
+   "title": "Marchés de Noël 2026\nouverts aujourd'hui près de chez vous",
+   "subtitle": "Dates · horaires · nocturnes · gratuit · accès",
+   "badge": "DATAtourisme (Licence Ouverte) · pages officielles, novembre 2026",
+   "brand": "Quel Marché de Noël"
+  },
+  {
+   "file": "og-en.png",
+   "title": "French Christmas markets 2026\nopen today near you",
+   "subtitle": "Dates · opening hours · late nights · free entry · access",
+   "badge": "DATAtourisme open data · official city pages, November 2026",
+   "brand": "Quel Marché de Noël"
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+---
+/** Page à intégrer (iframe) : le chercheur seul, en français et en anglais. noindex, hors du sitemap (astro.config). */
+import '../../../styles/global.css';
+import Tool from '../../../components/Tool.astro';
+import { SITE_URL, SITE_NAMES, LANG_TAGS } from '../../../data/site-config';
+import { route } from '../../../i18n/routes';
+import type { Lang } from '../../../lib/format';
+const T = { fr: 'Marchés de Noël ouverts autour de vous', en: 'French Christmas markets open near you' };
+export function getStaticPaths() {
+  return (['fr', 'en'] as const).map((lang) => ({ params: { lang, name: 'marches-de-noel-ouverts' } }));
+}
+const { lang } = Astro.params as { lang: Lang };
+const page = `${SITE_URL}${route('home', lang)}`;
+const dt = '<a href="https://www.datatourisme.fr/" rel="nofollow noopener" target="_blank" class="underline">DATAtourisme</a>';
+const note = { fr: `Site indépendant, ni office de tourisme ni organisateur · fiches ${dt} (Licence Ouverte 2.0) et pages officielles des villes · outil de Radif Partners`, en: `Independent site, not a tourist office or an organiser · ${dt} listings (Licence Ouverte 2.0) and official city pages · tool by Radif Partners` }[lang];
+---
+<!doctype html>
+<html lang={LANG_TAGS[lang]}>
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{`${T[lang]} (${lang === 'fr' ? 'à intégrer' : 'embed'})`}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={page} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  </head>
+  <body class="bg-white p-2 text-navy-900">
+    <main><Tool arg={{ ville: '67482', rayon: 30 }} lang={lang} idPrefix="embed" complet /></main>
+    <p class="mt-2 text-center text-xs text-navy-600"><a href={page} target="_blank" rel="noopener" class="underline">{SITE_NAMES[lang]}</a> · <Fragment set:html={note} /></p>
+  </body>
+</html>

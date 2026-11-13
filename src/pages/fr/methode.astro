@@ -1,0 +1,31 @@
+---
+/** Méthode : données, calculs, tests et limites. Chaque nombre vient de import-stats.json ou du moteur. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { route } from '../../i18n/routes';
+import { srcLink } from '../../lib/helpers';
+import { STATS, MARCHES } from '../../lib/data';
+import { breadcrumbSchema, webPageSchema } from '../../lib/seo';
+import { displayDate, formatNumber } from '../../lib/format';
+const lang = 'fr';
+const path = route('method', lang);
+const title = 'Méthode de Quel Marché de Noël 2026 : données et calculs';
+const description = 'Comment Quel Marché de Noël trouve les marchés ouverts : export DATAtourisme du 12 novembre 2026, pages officielles, règles d\'ouverture, distance et limites.';
+const s = (k: string, t: string) => srcLink(k, lang, t);
+const n = (x: number) => formatNumber(x, 0, lang);
+const off = MARCHES.filter((m) => m.src === 'off').map((m) => m.c).join(' et ');
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: 'Méthode', description, path, lang }), breadcrumbSchema([{ name: 'Accueil', path: route('home', lang) }, { name: 'Méthode', path }])]} breadcrumbs={[{ label: 'Méthode' }]}>
+  <article class="prose prose-slate max-w-none">
+    <h1>Méthode de Quel Marché de Noël : d'où viennent les dates</h1>
+    <p>La méthode de Quel Marché de Noël part de l'export public de <Fragment set:html={s('datatourisme', 'DATAtourisme')} />, téléchargé sur <Fragment set:html={s('datagouv', 'data.gouv.fr')} /> et lu le {displayDate(STATS.lu_le, 'fr-FR')} : {n(STATS.evenements)} événements saisis par les offices de tourisme, dont nous gardons ceux dont le nom parle d'un marché, d'un village ou d'une féerie de Noël et qui ne sont pas terminés. Restent {n(STATS.datatourisme)} fiches dans {n(STATS.communes)} communes, plus {n(STATS.officiels)} marchés relus sur la page officielle de leur ville ({off}), absents de la base.</p>
+    <div class="not-prose text-xs font-medium uppercase tracking-wide text-navy-500">Site indépendant : ni office de tourisme, ni organisateur</div>
+    <h2>Ouvert ou fermé tel jour</h2>
+    <p>Chaque fiche dit sur quelles périodes le marché a lieu et, souvent, quels jours de la semaine et à quelles heures. Un marché est compté ouvert un jour donné si une de ses périodes couvre ce jour et ce jour de la semaine. Les horaires montrés sont ceux de la fiche pour ce jour précis ; {n(STATS.avec_horaires)} fiches en donnent. Sans horaire, le chercheur écrit « non publiés » : nous ne devinons pas. Les fiches dont le nom annonce un concert, une exposition, un feu d'artifice ou une inauguration sont écartées ({n(STATS.exclus['pas un marché'])} cette saison) : ce sont des événements autour d'un marché, pas le marché. Une seule correction est faite sur les dates : quand une période commence l'année précédant sa fin et dure plus de 200 jours, nous la lisons comme une coquille d'année ({n(STATS.annee_corrigee)} fiche cette saison, celle de Tours, saisie « du 27 novembre 2025 au 27 décembre 2026 »).</p>
+    <h2>Distance et « ouvert maintenant »</h2>
+    <p>La distance est calculée à vol d'oiseau entre le centre de la commune de départ (<Fragment set:html={s('geoapi', 'geo.api.gouv.fr')} />) ou votre position, et les coordonnées de la fiche. Par la route, comptez souvent un tiers de plus. Quand le jour choisi est aujourd'hui, l'heure de votre appareil dit si chaque marché est ouvert, ouvre plus tard ou a fermé. Votre position ne quitte pas votre navigateur.</p>
+    <h2>Limites</h2>
+    <p>Une fiche n'est juste que si l'office de tourisme l'a tenue à jour ; un organisateur peut annuler pour cause de météo ou changer un horaire. Certaines villes (Lyon, Bordeaux, Paris, Nantes, Marseille) ne publient pas leurs marchés dans DATAtourisme et n'avaient pas de date 2026 lisible sur leur site au {displayDate(STATS.lu_le, 'fr-FR')} : elles n'ont pas de page. Le tri par distance ne dit rien de la taille d'un marché. Des tests automatiques vérifient le calcul des jours, des créneaux et des distances sur des fiches réelles ; le site ne se construit pas si l'un d'eux échoue.</p>
+    <h2>Comment la méthode de Quel Marché de Noël est mise à jour</h2>
+    <p>Le script d'import se relance à la main sur un nouvel export, puis le site est reconstruit ; il n'y a pas de mise à jour automatique. Les fiches relues sur les pages officielles portent leur date de lecture. Les données DATAtourisme sont réutilisées sous <Fragment set:html={s('licence', 'Licence Ouverte 2.0')} />, avec mention de la source. Une erreur se signale par la page <a href={route('contact', lang)}>contact</a> ; la façon dont nous corrigeons est décrite dans la <a href={route('editorial', lang)}>politique éditoriale</a>.</p>
+  </article>
+</PageLayout>

@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, REVIEW_CYCLE_MONTHS, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { displayDate } from '../../lib/format';
+const lang = 'fr';
+---
+<PageLayout title={`Politique éditoriale de ${SITE_NAMES[lang]} : sources et erreurs`} description="D'où viennent les dates et horaires des marchés de Noël de Quel Marché de Noël, dans quel ordre les sources font foi, et comment une erreur signalée est vérifiée puis corrigée." lang={lang} noindex={true} breadcrumbs={[{ label: 'Politique éditoriale' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Politique éditoriale</h1>
+    <p>Une date fausse fait faire un trajet pour rien. Cette page dit d'où vient chaque information et ce qui se passe quand elle est fausse.</p>
+    <h2>Responsable</h2><p>{AUTHOR_NAME} répond du contenu et du chercheur. Contact : <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Sources, par ordre</h2>
+    <ol>
+      <li><strong>La page de l'organisateur ou de la ville</strong>, quand nous l'avons lue : elle prime ;</li>
+      <li><strong>La fiche DATAtourisme</strong> saisie par l'office de tourisme, reprise telle quelle (dates, jours, horaires, adresse, gratuité) ;</li>
+      <li><strong>geo.api.gouv.fr</strong> pour le centre des communes qui servent de point de départ.</li>
+    </ol>
+    <p>Nous ne reprenons ni date ni horaire de la presse, des réseaux sociaux ou des annuaires. Un horaire absent de la fiche s'affiche « non publié », jamais deviné.</p>
+    <h2>Mise à jour</h2>
+    <p>L'export DATAtourisme est relu à la main, puis le site est reconstruit ; aucune mise à jour ne tourne seule. Date de la dernière lecture : {displayDate(LAST_UPDATED, 'fr-FR')}. Révision complète au moins tous les {REVIEW_CYCLE_MONTHS} mois, et avant chaque saison.</p>
+    <h2>Corrections</h2>
+    <p>Chaque signalement est vérifié sur la page de l'organisateur. Une correction confirmée entre dans le fichier des fiches relues, avec sa source et sa date de lecture.</p>
+    <h2>Indépendance</h2>
+    <p>Ce site n'est ni un office de tourisme ni un organisateur. Il ne vend aucun emplacement, ne classe aucun marché contre paiement et ne collecte aucune coordonnée.</p>
+    <p>Voir aussi <a href={route('about', lang)}>à propos</a> et la <a href={route('method', lang)}>méthode</a>.</p>
+  </div>
+</PageLayout>

@@ -1,0 +1,8 @@
+# DATAtourisme : plateforme nationale d'open data du tourisme, alimentée par les offices de tourisme et portée par ADN Tourisme avec l'État (DGE) ; source des fiches.
+datatourisme.fr
+# Ville et Eurométropole de Strasbourg : site officiel du marché de Noël, organisateur.
+strasbourg.eu
+# Ville de Lille : site officiel de la commune, organisatrice du Village de Noël.
+lille.fr
+# Ville de Reims : site officiel de la commune.
+reims.fr

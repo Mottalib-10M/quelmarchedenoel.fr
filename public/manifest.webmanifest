@@ -1,0 +1,21 @@
+{
+ "name": "Quel Marché de Noël",
+ "short_name": "Quel Marché de Noël",
+ "description": "Marchés de Noël 2026 en France : dates, horaires du jour, ouvert maintenant ou pas, distance depuis chez vous, ville par ville et région par région.",
+ "start_url": "/fr/",
+ "display": "standalone",
+ "background_color": "#ffffff",
+ "theme_color": "#9B1C2C",
+ "icons": [
+  {
+   "src": "/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}
