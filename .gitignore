@@ -3,3 +3,5 @@ dist/
 .astro/
 .DS_Store
 .cache-raw/
+__pycache__/
+logs/
