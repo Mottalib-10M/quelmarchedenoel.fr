@@ -1,6 +1,6 @@
 /** Blocs de données des pages (tableaux et comptes), tirés de marches.json : aucun chiffre tapé à la main. */
 import { table, ext } from './table';
-import { MARCHES, SAISON, jours, depNom, region, ville as villeDe, VILLES, jourMois, plage } from './data';
+import { MARCHES, SAISON, jours, depNom, region, ville as villeDe, VILLES, jourMois, jourCourt, plage } from './data';
 import { creneaux, distanceKm, ouvertLe, jourSemaine, joursOuverts, type Marche } from './engine/marches';
 import { formatNumber, type Lang } from './format';
 
@@ -10,12 +10,14 @@ const nom = (m: Marche) => (m.w ? ext(m.w, m.n) : m.n);
 export const joursSaison = (m: Marche) => joursOuverts(m, SAISON.debut, SAISON.fin);
 const premier = (m: Marche) => joursSaison(m)[0] ?? m.o[0][0];
 const dernier = (m: Marche) => { const j = joursSaison(m); return j[j.length - 1] ?? m.o[0][1]; };
+/** « 20 novembre au 30 décembre », ou « 6 décembre » pour un seul jour (testeurs du 2026-11-14 : « 6 décembre au 6 décembre »). */
+const periode = (m: Marche, l: Lang) => { const a = premier(m), b = dernier(m); return a === b ? jourMois(a, l) : `${jourMois(a, l)} ${T(l, 'au', 'to')} ${jourMois(b, l)}`; };
 /** Horaires du premier samedi ouvert (ou du premier jour ouvert), avec ce jour. */
 function horairesType(m: Marche, l: Lang): string {
   const j = joursSaison(m); const sam = j.find((d) => jourSemaine(d) === 5) ?? j[0];
   if (!sam) return T(l, 'non publiés', 'not published');
   const c = creneaux(m, sam);
-  return c.length ? `${plage(c, l)} (${jourMois(sam, l)})` : T(l, 'non publiés', 'not published');
+  return c.length ? `${plage(c, l)} (${jourCourt(sam, l).toLowerCase()})` : T(l, 'non publiés', 'not published');
 }
 const parJours = (a: Marche, b: Marche) => joursSaison(b).length - joursSaison(a).length || a.n.localeCompare(b.n);
 
@@ -36,13 +38,13 @@ export const nb = (l: Marche[], lang: Lang) => n(l.length, lang);
 
 // ── Tableaux ──────────────────────────────────────────────────────────────
 export function tabMarches(l: Marche[], lang: Lang, cap?: string, max = 40) {
-  const rows = [...l].sort(parJours).slice(0, max).map((m) => [nom(m), m.c, `${jourMois(premier(m), lang)} ${T(lang, 'au', 'to')} ${jourMois(dernier(m), lang)}`, n(joursSaison(m).length, lang), horairesType(m, lang)]);
-  return table([T(lang, 'Marché', 'Market'), T(lang, 'Commune', 'Town'), T(lang, 'Dates', 'Dates'), T(lang, 'Jours d\'ouverture', 'Days open'), T(lang, 'Horaires, un samedi', 'Hours on a Saturday')], rows, cap, ['l', 'l', 'l', 'r', 'l'], lang);
+  const rows = [...l].sort(parJours).slice(0, max).map((m) => [nom(m), m.c, periode(m, lang), n(joursSaison(m).length, lang), horairesType(m, lang)]);
+  return table([T(lang, 'Marché', 'Market'), T(lang, 'Commune', 'Town'), T(lang, 'Dates', 'Dates'), T(lang, 'Jours d\'ouverture', 'Days open'), T(lang, 'Horaires (exemple d\'un samedi)', 'Hours (a sample Saturday)')], rows, cap, ['l', 'l', 'l', 'r', 'l'], lang);
 }
 export function tabAutour(insee: string, km: number, lang: Lang, max = 12, cap?: string) {
   const v = VILLES.find((x) => x.insee === insee)!;
   const l = MARCHES.filter((m) => m.insee !== insee && distanceKm(v, m) <= km).sort(parJours).slice(0, max);
-  const rows = l.map((m) => [nom(m), m.c, `${n(distanceKm(v, m), lang)} km`, `${jourMois(premier(m), lang)} ${T(lang, 'au', 'to')} ${jourMois(dernier(m), lang)}`, n(joursSaison(m).length, lang)]);
+  const rows = l.map((m) => [nom(m), m.c, `${n(distanceKm(v, m), lang)} km`, periode(m, lang), n(joursSaison(m).length, lang)]);
   return table([T(lang, 'Marché', 'Market'), T(lang, 'Commune', 'Town'), T(lang, 'Distance', 'Distance'), T(lang, 'Dates', 'Dates'), T(lang, 'Jours', 'Days')], rows, cap, ['l', 'l', 'r', 'l', 'r'], lang);
 }
 export const WEEKENDS = [['2026-11-21', '2026-11-22'], ['2026-11-28', '2026-11-29'], ['2026-12-05', '2026-12-06'], ['2026-12-12', '2026-12-13'], ['2026-12-19', '2026-12-20']] as const;

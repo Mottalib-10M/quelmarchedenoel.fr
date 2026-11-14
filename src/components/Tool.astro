@@ -17,10 +17,14 @@ const R = arg.region ? region(arg.region) : null;
 const sousListe = complet ? autour(v, zone) : R ? MARCHES.filter((m) => R.deps.includes(m.d)) : autour(v, zone);
 // Villes proposées : celles de la région, ou celles à moins de 40 km ; toutes sur l'accueil (fichier complet).
 // Toutes les villes sont proposées : hors de la zone de la page, le chercheur charge le fichier complet.
+// « Kaysersberg Vignoble » (nom officiel de la commune) se lit « Kaysersberg » : les testeurs doutaient d'être au bon endroit.
+const nomCourt = (n: string) => (n === 'Kaysersberg Vignoble' ? 'Kaysersberg' : n);
 const villes = VILLES
-  .map((x) => ({ k: x.insee, n: x.n, la: x.la, lo: x.lo }));
-if (!villes.some((x) => x.k === v.insee)) villes.unshift({ k: v.insee, n: v.n, la: v.la, lo: v.lo });
+  .map((x) => ({ k: x.insee, n: nomCourt(x.n), la: x.la, lo: x.lo }));
+if (!villes.some((x) => x.k === v.insee)) villes.unshift({ k: v.insee, n: nomCourt(v.n), la: v.la, lo: v.lo });
+const vedette = arg.vedette ? { m: leger(MARCHES.filter((m) => arg.vedette!.ids.includes(m.id))), nom: arg.vedette[lang], pl: !!arg.vedette.pl } : undefined;
+if (arg.vedette && vedette!.m.length !== arg.vedette.ids.length) throw new Error(`marché de la page introuvable : ${arg.vedette.ids.join(', ')}`);
 ---
 <Finder client:load lang={lang} marches={leger(sousListe)} villes={villes} ville={v.insee} rayon={arg.rayon ?? 30} jour={arg.jour ?? JOUR_REPERE}
   filtre={arg.filtre ?? 'tous'} jours={jours()} aujourdhui={arg.aujourdhui ?? !arg.jour} complet="/data/marches.json"
-  zone={R ? 0 : zone} methodHref={route('method', lang)} idPrefix={idPrefix} titre={titre} />
+  zone={R ? 0 : zone} methodHref={route('method', lang)} idPrefix={idPrefix} titre={titre} vedette={vedette} />

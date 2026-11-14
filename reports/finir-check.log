@@ -1,0 +1,170 @@
+
+> quelmarchedenoel.fr@0.1.0 check
+> npm run build && npx vitest run && node scripts/typo-nbsp.mjs dist --check && node scripts/check-legal.mjs && python3 scripts/check-seo.py . && python3 scripts/check-unique.py . && python3 scripts/check-trame.py . && python3 scripts/check-liens.py . && node scripts/check-layout.mjs . && node scripts/check-sources.mjs . && python3 scripts/check-simulateurs.py . && python3 scripts/check-hreflang.py . && python3 scripts/check-anglais.py . && python3 scripts/check-portefeuille.py . && python3 scripts/check-cookies.py . && node scripts/check-url-propre.mjs . && node scripts/check-premier-ecran.mjs . && node scripts/check-droits.mjs . && node scripts/check-copie.mjs . && node scripts/check-nombres.mjs . && node scripts/check-contraste.mjs . && node scripts/check-saisie.mjs . && python3 scripts/check-regles.py . && python3 scripts/check-motcle.py .
+
+
+> quelmarchedenoel.fr@0.1.0 build
+> astro build && node scripts/typo-nbsp.mjs && python3 scripts/check-snippets.py dist
+
+18:01:27 [types] Generated 118ms
+18:01:27 [build] output: "static"
+18:01:27 [build] mode: "static"
+18:01:27 [build] directory: /Users/mottalib/Documents/GitHub/a-publier/Mottalib-10M/quelmarchedenoel.fr/dist/
+18:01:27 [build] Collecting build info...
+18:01:27 [build] ✓ Completed in 142ms.
+18:01:27 [build] Building static entrypoints...
+18:01:28 [vite] ✓ built in 1.40s
+18:01:29 [vite] ✓ built in 616ms
+18:01:29 [build] Rearranging server assets...
+
+ generating static routes 
+18:01:34   ├─ /404.html (+14ms) 
+18:01:34   ├─ /embed/fr/marches-de-noel-ouverts/index.html (+40ms) 
+18:01:34   ├─ /embed/en/marches-de-noel-ouverts/index.html (+23ms) 
+18:01:34   ├─ /en/about/index.html (+6ms) 
+18:01:34   ├─ /en/contact/index.html (+4ms) 
+18:01:34   ├─ /en/cookies/index.html (+5ms) 
+18:01:34   ├─ /en/editorial-policy/index.html (+6ms) 
+18:01:34   ├─ /en/legal-notice/index.html (+6ms) 
+18:01:34   ├─ /en/method/index.html (+7ms) 
+18:01:34   ├─ /en/privacy/index.html (+3ms) 
+18:01:34   ├─ /en/widget/index.html (+3ms) 
+18:01:34   ├─ /en/index.html (+525ms) 
+18:01:34   ├─ /en/alsace-christmas-markets/index.html (+467ms) 
+18:01:35   ├─ /en/grand-est-christmas-markets/index.html (+926ms) 
+18:01:36   ├─ /en/strasbourg-christmas-market/index.html (+106ms) 
+18:01:36   ├─ /en/colmar-christmas-market/index.html (+82ms) 
+18:01:36   ├─ /en/nouvelle-aquitaine-christmas-markets/index.html (+882ms) 
+18:01:37   ├─ /en/christmas-markets-weekend/index.html (+34ms) 
+18:01:37   ├─ /en/lille-christmas-market/index.html (+16ms) 
+18:01:37   ├─ /en/late-night-christmas-markets/index.html (+250ms) 
+18:01:37   ├─ /en/occitanie-christmas-markets/index.html (+377ms) 
+18:01:37   ├─ /en/christmas-markets-after-christmas/index.html (+92ms) 
+18:01:37   ├─ /en/pays-de-la-loire-christmas-markets/index.html (+358ms) 
+18:01:38   ├─ /en/reims-christmas-market/index.html (+27ms) 
+18:01:38   ├─ /en/amiens-christmas-market/index.html (+18ms) 
+18:01:38   ├─ /en/normandy-christmas-markets/index.html (+341ms) 
+18:01:38   ├─ /en/centre-val-de-loire-christmas-markets/index.html (+298ms) 
+18:01:38   ├─ /en/mulhouse-christmas-market/index.html (+129ms) 
+18:01:39   ├─ /en/auvergne-rhone-alpes-christmas-markets/index.html (+219ms) 
+18:01:39   ├─ /en/metz-christmas-market/index.html (+50ms) 
+18:01:39   ├─ /en/bourgogne-franche-comte-christmas-markets/index.html (+220ms) 
+18:01:39   ├─ /en/kaysersberg-christmas-market/index.html (+56ms) 
+18:01:39   ├─ /en/brittany-christmas-markets/index.html (+187ms) 
+18:01:39   ├─ /en/rouen-christmas-market/index.html (+31ms) 
+18:01:39   ├─ /en/toulouse-christmas-market/index.html (+40ms) 
+18:01:39   ├─ /en/montpellier-christmas-market/index.html (+36ms) 
+18:01:39   ├─ /fr/a-propos/index.html (+3ms) 
+18:01:39   ├─ /fr/confidentialite/index.html (+3ms) 
+18:01:39   ├─ /fr/contact/index.html (+2ms) 
+18:01:39   ├─ /fr/cookies/index.html (+3ms) 
+18:01:39   ├─ /fr/mentions-legales/index.html (+2ms) 
+18:01:39   ├─ /fr/methode/index.html (+3ms) 
+18:01:39   ├─ /fr/politique-editoriale/index.html (+2ms) 
+18:01:39   ├─ /fr/widget/index.html (+4ms) 
+18:01:39   ├─ /fr/index.html (+501ms) 
+18:01:40   ├─ /fr/marches-de-noel-alsace/index.html (+449ms) 
+18:01:40   ├─ /fr/marches-de-noel-grand-est/index.html (+878ms) 
+18:01:41   ├─ /fr/marche-de-noel-strasbourg/index.html (+107ms) 
+18:01:41   ├─ /fr/marche-de-noel-colmar/index.html (+110ms) 
+18:01:41   ├─ /fr/marches-de-noel-nouvelle-aquitaine/index.html (+884ms) 
+18:01:42   ├─ /fr/marches-de-noel-week-end/index.html (+31ms) 
+18:01:42   ├─ /fr/marche-de-noel-lille/index.html (+19ms) 
+18:01:42   ├─ /fr/marches-de-noel-nocturne/index.html (+246ms) 
+18:01:43   ├─ /fr/marches-de-noel-occitanie/index.html (+373ms) 
+18:01:43   ├─ /fr/marches-de-noel-apres-noel/index.html (+95ms) 
+18:01:43   ├─ /fr/marches-de-noel-pays-de-la-loire/index.html (+344ms) 
+18:01:43   ├─ /fr/marche-de-noel-reims/index.html (+29ms) 
+18:01:44   ├─ /fr/marche-de-noel-amiens/index.html (+16ms) 
+18:01:44   ├─ /fr/marches-de-noel-normandie/index.html (+302ms) 
+18:01:44   ├─ /fr/marches-de-noel-centre-val-de-loire/index.html (+287ms) 
+18:01:44   ├─ /fr/marche-de-noel-mulhouse/index.html (+117ms) 
+18:01:44   ├─ /fr/marches-de-noel-auvergne-rhone-alpes/index.html (+215ms) 
+18:01:44   ├─ /fr/marche-de-noel-metz/index.html (+53ms) 
+18:01:45   ├─ /fr/marches-de-noel-bourgogne-franche-comte/index.html (+228ms) 
+18:01:45   ├─ /fr/marche-de-noel-kaysersberg/index.html (+57ms) 
+18:01:45   ├─ /fr/marches-de-noel-bretagne/index.html (+190ms) 
+18:01:45   ├─ /fr/marche-de-noel-rouen/index.html (+36ms) 
+18:01:45   ├─ /fr/marche-de-noel-toulouse/index.html (+33ms) 
+18:01:45   ├─ /fr/marche-de-noel-montpellier/index.html (+31ms) 
+18:01:45   ├─ /llms.txt (+2ms) 
+18:01:45   ├─ /index.html (+6ms) 
+18:01:45 ✓ Completed in 16.32s.
+
+18:01:45 [build] ✓ Completed in 18.38s.
+18:01:45 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+18:01:45 [build] 70 page(s) built in 18.59s
+18:01:45 [build] Complete!
+typo-nbsp: 1927 espace(s) rendue(s) insécable(s) dans 34 page(s)
+check-snippets : 54 pages indexables, titres 50-60, descriptions 150-160, ordre des mots et unicite conformes
+
+ RUN  v4.1.12 /Users/mottalib/Documents/GitHub/a-publier/Mottalib-10M/quelmarchedenoel.fr
+
+
+ Test Files  3 passed (3)
+      Tests  446 passed (446)
+   Start at  18:01:47
+   Duration  14.83s (transform 683ms, setup 0ms, import 15.01s, tests 252ms, environment 0ms)
+
+typo-nbsp: 0 espace(s) à corriger dans 0 page(s)
+typo-nbsp: 0 décimale(s) avec un point dans une langue à virgule
+typo-nbsp: 0 pourcentage(s) écrit(s) mal placé(s) : « 20 % » là où la langue écrit « 20% », ou après le nombre en turc, qui écrit « %20 » (souvent dans un composant React : corriger la source)
+typo-nbsp: 0 mot(s) français sans accent ou avec un accent faux
+Identité légale complète, aucune mention provisoire.
+. : 54 pages indexables, 0 à corriger
+
+. : 54 pages comparées, 0 paire(s) trop proches, 0 question(s) recyclée(s)
+
+. : 69 pages, 0 à corriger, 0 question(s) de FAQ recyclée(s)
+. : 73 pages, 0 cible(s) morte(s), 0 lien(s) a corriger, 0 route(s) vide(s)
+check-layout: 54 pages × 4 largeurs, 0 défaut(s)
+check-sources: 554 source(s), 0 morte(s), 20 injoignable(s), 4 bloquée(s) aux robots
+  ~ connexion http://www.saint-samson-festivites.fr/  (serveur en panne ? à revérifier)
+  ~ connexion http://www.indre.chambagri.fr/  (serveur en panne ? à revérifier)
+  ~ connexion https://www.interassociationremelfing.com/  (serveur en panne ? à revérifier)
+  ~ connexion http://ch-haguenau.fr/  (serveur en panne ? à revérifier)
+  ~ connexion https://www.kirrwiller.eu/  (serveur en panne ? à revérifier)
+  ~ 503 http://ville-hesingue.fr/  (serveur en panne ? à revérifier)
+  ~ connexion http://chateaudemartainville.fr/  (serveur en panne ? à revérifier)
+  ~ 500 https://filsetcordes.fr/index.php/marche-de-noel1  (serveur en panne ? à revérifier)
+  ~ 500 http://chateau-lavison.fr/  (serveur en panne ? à revérifier)
+  ~ connexion http://dacor47.com/  (serveur en panne ? à revérifier)
+  ~ connexion http://www.charroux03.fr/  (serveur en panne ? à revérifier)
+  ~ connexion https://boutique-officebeziers.welogin.fr/fr/produit/carmen-le-destin-de-la-liberte  (serveur en panne ? à revérifier)
+  ~ connexion https://www.saugues.fr/  (serveur en panne ? à revérifier)
+  ~ 500 https://www.saintjeandevedas.fr/agenda/agenda-2026/marche-de-noel  (serveur en panne ? à revérifier)
+  ~ connexion https://www.castelnau-magnoac.fr/  (serveur en panne ? à revérifier)
+  ~ connexion http://arleshopping.fr/  (serveur en panne ? à revérifier)
+  ~ connexion http://association-marquage.com/  (serveur en panne ? à revérifier)
+  ~ connexion http://www.lesouriremonasterien.asso-web.com/  (serveur en panne ? à revérifier)
+  ~ 503 https://www.quilly.fr/  (serveur en panne ? à revérifier)
+  ~ connexion https://www.saint-laurent-gorre.fr/  (serveur en panne ? à revérifier)
+  ? 403 https://www.helloasso.com/associations/amicale-laique-villeneuvoise  (à vérifier à la main)
+  ? 403 https://www.helloasso.com/associations/amicale-de-lacq/boutiques/repas-marche-de-noel-2026  (à vérifier à la main)
+  ? 403 https://www.helloasso.com/  (à vérifier à la main)
+  ? 403 https://www.zelozum.fr/agenda/  (à vérifier à la main)
+. : 50 page(s) de contenu, 0 sans simulateur
+. : 54 pages, 54 avec hreflang, 0 à corriger
+. : 27 page(s) en langue locale, 0 sans version anglaise
+check-portefeuille : 0 paragraphe(s) copiés, 0 site(s) du portefeuille liés, 60 sites comparés.
+check-cookies : 0 défaut (71 pages, Clarity sur 67, GA4 G-TJ29S1YP1Q sur 67, langues en, fr)
+check-url-propre: 54 page(s) du sitemap, 0 défaut(s)
+check-premier-ecran : 0 page(s) fautive(s) sur 50 page(s) à simulateur (54 pages lues)
+check-droits : 69 page(s) lues dans dist ; licences citées : aucune ; workflow planifié : oui
+  (a) liens soumis à autorisation (citer l’organisme sans lien : titre, adresse en texte, date) : 0
+  (b) relais juridique présenté comme officiel (lien vers le texte officiel, ou « relais non officiel ») : 0
+  (c) copie web.archive.org présentée comme officielle (écrire « copie archivée du JJ/MM/AAAA ») : 0
+  (d) attribution de licence absente du pied de page : 0
+  (e) promesse de mise à jour sans workflow planifié (écrire « lu le JJ/MM/AAAA, mise à jour manuelle ») : 0
+check-droits : 0 défaut
+check-copie : sans objet (pas de data/textes-sources/*.txt)
+  40 page(s), 0 champ(s) mal formaté(s)
+check-contraste: 54 page(s), 0 texte(s) sous le seuil
+check-saisie: 0 page(s) à calculateur, 0 défaut(s)
+  trame        ok         site le plus proche : titresresto.fr (54 % de blocs en commun)
+  chiffres     ok         date de mise à jour visible · 6 source(s) officielle(s) liée(s)
+  credibilite  ok         À propos lié · méthode liée
+  reseau       ok         liens vers : aucun site du portefeuille
+  publicite    ok         0 emplacement(s) publicitaire(s) sur l’accueil
+check-regles : 292 accueils comparés, 0 règle(s) KO ou à revoir
+check-motcle : 0/50 page(s) où le terme-clé du titre manque {}

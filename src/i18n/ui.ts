@@ -5,15 +5,15 @@ const fr = {
   skipToContent: 'Aller au contenu', mainNav: 'Navigation principale', breadcrumbLabel: 'Fil d\'Ariane', breadcrumbHome: 'Accueil', menuOpen: 'Ouvrir le menu',
   faqTitle: 'Questions fréquentes', relatedCalculators: 'Pour continuer', sourcesTitle: 'Données et pages sur lesquelles repose cette page', writtenBy: 'Préparé par',
   asOf: 'Situation', lastUpdated: 'données lues le', footerValidated: 'Fiches lues dans l\'export DATAtourisme du 12 novembre 2026 et sur les pages officielles de Strasbourg et de Lille',
-  footerBrowser: 'Le chercheur fonctionne dans votre navigateur · votre position éventuelle n\'est pas envoyée · sans inscription',
-  footerDisclaimer: 'Quel Marché de Noël est un site indépendant publié par Radif Partners : ce n\'est ni un office de tourisme, ni un organisateur de marché, ni une administration. Les dates et horaires viennent des fiches saisies par les offices de tourisme dans DATAtourisme (Licence Ouverte 2.0, ADN Tourisme) et, pour Strasbourg et Lille, des pages officielles des villes ; un organisateur peut les changer : vérifiez sur sa page avant de partir. Ce site ne remplace pas l\'information de l\'organisateur.',
+  footerBrowser: 'Le moteur de recherche fonctionne dans votre navigateur · votre position éventuelle n\'est pas envoyée · sans inscription',
+  footerDisclaimer: 'Quel Marché de Noël est un site indépendant publié par Radif Partners : ce n\'est ni un office de tourisme, ni un organisateur de marché, ni une administration. Les dates et horaires viennent des fiches publiées par les offices de tourisme dans DATAtourisme (Licence Ouverte 2.0, ADN Tourisme) et, pour Strasbourg et Lille, des pages officielles des villes ; un organisateur peut les changer : vérifiez sur sa page avant de partir. Ce site ne remplace pas l\'information de l\'organisateur.',
   footerReuse: '',
   footerPopular: 'Les plus cherchés',
   notFound: 'Aucune page à cette adresse. L\'accueil cherche les marchés de Noël ouverts le jour de votre choix autour de chez vous.',
   readMore: 'Lire la suite',
   trama: {} as Partial<LibellesTrame>,
   privacyLine: 'Nous ne demandons ni nom ni courriel ; si vous utilisez votre position, elle sert au calcul dans votre navigateur et n\'est envoyée nulle part.',
-  copyLink: 'Copier le lien', copied: 'Lien copié', print: 'Imprimer', howComputed: 'D\'où viennent les dates', openFull: 'Ouvrir le chercheur complet',
+  copyLink: 'Copier le lien', copied: 'Lien copié', print: 'Imprimer', howComputed: 'D\'où viennent les dates', openFull: 'Ouvrir le moteur de recherche complet',
   independent: 'Site indépendant : ni office de tourisme, ni organisateur',
 };
 const en: typeof fr = {

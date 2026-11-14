@@ -120,3 +120,18 @@ p[id$="-help"]:not([role="status"]), [data-fixe], [data-actuellement], [aria-liv
   [aria-live] table tr:has(> td + td) { border-top: 1px solid var(--color-navy-200); padding: .3rem 0; }
   [aria-live] table tr > td + td { flex: 1 1 100%; padding-top: .1rem; text-align: left; font-weight: 600; }
 }
+
+/* Parties repliées (Body.astro, HomePage.astro : <details class="fold">). Sans style, le triangle du navigateur
+   restait seul sur sa ligne, le titre dessous, puis un grand blanc : trois testeurs sur trois y ont vu une section
+   vide (2026-11-14). Le titre se lit dans un cadre, comme les questions fréquentes, avec « Afficher » et un chevron
+   sur la même ligne. */
+.fold { margin: 1rem 0; border: 1px solid var(--color-navy-200); border-radius: .5rem; background: #fff; }
+.fold > summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; list-style: none; padding: .85rem 1rem; }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary > .fold-h, .prose .fold > summary > .fold-h { flex: 1 1 auto; min-width: 0; margin: 0; padding: 0; border: 0; font-size: 1.15rem; line-height: 1.35; color: var(--color-navy-900); }
+.fold > summary::after { content: "Afficher \25BE"; flex: none; white-space: nowrap; font-family: var(--font-sans); font-size: .875rem; font-weight: 600; color: var(--color-accent-700); }
+.fold[open] > summary::after { content: "Masquer \25B4"; }
+:lang(en) .fold > summary::after { content: "Show \25BE"; }
+:lang(en) .fold[open] > summary::after { content: "Hide \25B4"; }
+.fold > summary:hover { background: var(--color-accent-50); border-radius: .5rem; }
+.fold > div { padding: 0 1rem .5rem; }

@@ -26,7 +26,9 @@ export interface Helpers extends Kit {
 
 export type Group = 'villes' | 'regions' | 'themes';
 /** Réglage du chercheur en tête de page : ville de départ (code INSEE), rayon, jour, filtre, région. */
-export interface OutilArg { ville: string; rayon?: number; jour?: string; filtre?: 'tous' | 'soir' | 'gratuit' | 'horaires'; zone?: number; region?: string; aujourdhui?: boolean }
+export interface OutilArg { ville: string; rayon?: number; jour?: string; filtre?: 'tous' | 'soir' | 'gratuit' | 'horaires'; zone?: number; region?: string; aujourdhui?: boolean;
+  /** Le marché de la page (pages de ville) : avant son ouverture, le résultat dit quand il ouvre (testeurs du 2026-11-14). */
+  vedette?: { ids: string[]; fr: string; en: string; pl?: boolean } }
 
 export interface LangPage {
   /** Segment d'URL, minuscules et tirets, sans accent. */

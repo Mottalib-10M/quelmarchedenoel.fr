@@ -4,7 +4,7 @@ import { CONTACT_EMAIL, SITE_NAMES } from '../../data/site-config';
 import { route } from '../../i18n/routes';
 import { contactPageSchema } from '../../lib/seo';
 const lang = 'fr';
-const description = 'Écrivez-nous si une date, un horaire ou un lieu de marché de Noël semble faux, si un marché manque, ou pour intégrer le chercheur. Nous ne louons aucun chalet.';
+const description = 'Écrivez-nous si une date, un horaire ou un lieu de marché de Noël semble faux, si un marché manque, ou pour intégrer le moteur de recherche. Nous ne louons aucun chalet.';
 ---
 <PageLayout title={`Contact de ${SITE_NAMES[lang]} : signaler une erreur`} description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Contact', description, path: route('contact', lang), lang })]} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
   <div class="prose prose-slate max-w-none">
@@ -14,7 +14,7 @@ const description = 'Écrivez-nous si une date, un horaire ou un lieu de marché
     <p>Indiquez le marché, la commune et, si possible, la page de l'organisateur qui donne la bonne information. Nous vérifions à la source avant de changer quoi que ce soit. Un organisateur peut aussi corriger sa fiche auprès de son office de tourisme : elle sera reprise à la mise à jour suivante.</p>
     <h2>Exposants et organisateurs</h2>
     <p>Nous n'attribuons aucun emplacement et ne vendons aucune visibilité. Pour exposer, adressez-vous à l'organisateur du marché ou à la mairie de la commune.</p>
-    <h2>Intégrer le chercheur</h2>
+    <h2>Intégrer le moteur de recherche</h2>
     <p>Hôtels, gîtes, mairies et associations peuvent l'intégrer gratuitement : <a href={route('widget', lang)}>mode d'emploi</a>.</p>
   </div>
 </PageLayout>

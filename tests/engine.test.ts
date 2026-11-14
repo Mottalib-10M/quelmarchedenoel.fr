@@ -1,6 +1,6 @@
 /** Moteur des marchés : cas tirés de fiches réelles (export DATAtourisme du 12/11/2026, pages officielles lues le 13/11/2026). */
 import { describe, expect, it } from 'vitest';
-import { ouvertLe, creneaux, etatA, jourSemaine, distanceKm, cherche, ajouteJours } from '../src/lib/engine/marches';
+import { ouvertLe, creneaux, etatA, jourSemaine, distanceKm, cherche, ajouteJours, saisonDe, prochainJourZone } from '../src/lib/engine/marches';
 import { MARCHES, VILLES, STATS } from '../src/lib/data';
 const m = (insee: string, motif: string) => MARCHES.find((x) => x.insee === insee && x.n.includes(motif))!;
 
@@ -57,5 +57,22 @@ describe('distance et recherche', () => {
   });
   it('filtre du soir : ferme à 20 h ou plus tard', () => {
     for (const x of cherche(MARCHES, cmr, 30, '2026-12-05', 'soir')) expect(x.c.some(([, b]) => b >= '20:00' || b === '00:00')).toBe(true);
+  });
+});
+describe('avant l\'ouverture, entre deux jours, après la fermeture (testeurs naïfs du 2026-11-14)', () => {
+  const J = (() => { const o: string[] = []; for (let d = '2026-11-13'; d <= '2027-01-10'; d = ajouteJours(d, 1)) o.push(d); return o; })();
+  it('Amiens le 14 novembre : pas encore ouvert, ouvre le vendredi 20 novembre', () => { expect(saisonDe([m('80021', 'Amiens')], '2026-11-14', J)).toEqual({ etat: 'avant', le: '2026-11-20' }); });
+  it('Lille le 14 novembre : ouvre le 18 novembre', () => { expect(saisonDe([m('59350', 'Lille')], '2026-11-14', J)).toEqual({ etat: 'avant', le: '2026-11-18' }); });
+  it('Kaysersberg un mardi de l\'Avent : fermé, rouvre le vendredi 4 décembre', () => {
+    const k = MARCHES.filter((x) => x.insee === '68162');
+    expect(saisonDe(k, '2026-12-01', J)).toEqual({ etat: 'ferme', le: '2026-12-04' });
+  });
+  it('Strasbourg le 26 décembre : fini, dernier jour le 24 décembre', () => { expect(saisonDe([m('67482', 'Strasbourg')], '2026-12-26', J)).toEqual({ etat: 'fini', le: '2026-12-24' }); });
+  it('le jour d\'ouverture : ouvert', () => { expect(saisonDe([m('80021', 'Amiens')], '2026-11-20', J)).toEqual({ etat: 'ouvert' }); });
+  it('zone sans marché ce jour-là : le prochain jour donne au moins un résultat', () => {
+    const ams = VILLES.find((v) => v.n === 'Amiens')!;
+    const s = prochainJourZone(MARCHES, ams, 30, '2026-11-14', J);
+    if (s.etat === 'avant' || s.etat === 'ferme') { expect(s.le > '2026-11-14').toBe(true); expect(cherche(MARCHES, ams, 30, s.le).length).toBeGreaterThan(0); }
+    else expect(s.etat).toBe('ouvert');
   });
 });

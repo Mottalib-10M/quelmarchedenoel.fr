@@ -7,8 +7,8 @@ import { srcLink } from '../../lib/helpers';
 import { profilePageSchema, breadcrumbSchema } from '../../lib/seo';
 const lang = 'fr';
 const path = route('about', lang);
-const title = 'Marchés de Noël 2026 : qui publie ce chercheur de marchés';
-const description = 'Radif Partners publie Quel Marché de Noël : un chercheur gratuit des marchés de Noël 2026 ouverts tel jour, bâti sur les données ouvertes DATAtourisme.';
+const title = 'Marchés de Noël 2026 : qui publie ce moteur de recherche';
+const description = 'Radif Partners publie Quel Marché de Noël : un moteur de recherche gratuit des marchés de Noël 2026 ouverts tel jour, tiré des données ouvertes DATAtourisme.';
 const s = (k: string, t: string) => srcLink(k, lang, t);
 ---
 <PageLayout title={title} description={description} lang={lang} jsonLd={[profilePageSchema({ path, lang }), breadcrumbSchema([{ name: 'Accueil', path: route('home', lang) }, { name: 'À propos', path }])]} breadcrumbs={[{ label: 'À propos' }]}>
@@ -17,7 +17,7 @@ const s = (k: string, t: string) => srcLink(k, lang, t);
     <p>{AUTHOR_DESC.fr}</p>
     <div class="not-prose text-xs font-medium uppercase tracking-wide text-navy-500">Site indépendant : ni office de tourisme, ni organisateur</div>
     <h2>Pourquoi ce site existe</h2>
-    <p>Chercher un marché de Noël pour samedi revient souvent à ouvrir dix pages : la ville a son site, l'office de tourisme le sien, les médias publient des palmarès sans horaires, et les annuaires cachent leurs listes derrière la publicité. Les offices de tourisme saisissent pourtant presque tous leurs marchés dans une base publique. Nous la lisons, nous calculons qui est ouvert le jour choisi et à quelle distance, et nous rendons la réponse lisible sans compte ni publicité intrusive.</p>
+    <p>Chercher un marché de Noël pour samedi revient souvent à ouvrir dix pages : la ville a son site, l'office de tourisme le sien, les médias publient des palmarès sans horaires, et les annuaires cachent leurs listes derrière la publicité. Les offices de tourisme publient pourtant presque tous leurs marchés dans une base publique. Nous la lisons, nous calculons qui est ouvert le jour choisi et à quelle distance, et nous rendons la réponse lisible sans compte ni publicité intrusive.</p>
     <h2>Une entreprise, pas un office de tourisme</h2>
     <p>{AUTHOR_NAME} est une entreprise qui construit des outils à partir de données publiques. Elle n'organise aucun marché, ne loue aucun chalet, ne vend aucun billet et n'a aucun accord avec un exposant ou une ville. Le site n'utilise aucun logo de ville ni d'office de tourisme.</p>
     <LegalIdentity lang={lang} />

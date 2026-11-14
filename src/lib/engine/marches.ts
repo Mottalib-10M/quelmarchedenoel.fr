@@ -91,3 +91,31 @@ export function cherche(liste: Marche[], centre: { la: number; lo: number }, ray
   }
   return out.sort((a, b) => a.km - b.km || a.m.n.localeCompare(b.m.n));
 }
+
+/**
+ * Où en est un marché (ou un groupe de marchés : les places de Colmar) le jour `iso`, parmi les jours proposés.
+ * Testeurs naïfs du 2026-11-14 : avant l'ouverture, la page de ville affichait « Aucun » sans dire quand le marché
+ * ouvre. `avant` : pas encore ouvert, ouvre le `le` ; `ferme` : fermé ce jour-là, rouvre le `le` ; `fini` : dernier
+ * jour d'ouverture `le` passé ; `ouvert`.
+ */
+export type Saison = { etat: 'ouvert' } | { etat: 'avant'; le: string } | { etat: 'ferme'; le: string } | { etat: 'fini'; le: string } | { etat: 'inconnu' };
+export function saisonDe(ms: Marche[], iso: string, jours: string[]): Saison {
+  const ouv = (d: string) => ms.some((m) => ouvertLe(m, d));
+  if (ouv(iso)) return { etat: 'ouvert' };
+  const ouverts = jours.filter(ouv);
+  if (!ouverts.length) return { etat: 'inconnu' };
+  const apres = ouverts.find((d) => d > iso);
+  if (!apres) return { etat: 'fini', le: ouverts[ouverts.length - 1] };
+  return ouverts[0] > iso ? { etat: 'avant', le: apres } : { etat: 'ferme', le: apres };
+}
+/** Même question pour une zone : premier jour, après `iso`, où au moins un marché de la recherche est ouvert. */
+export function prochainJourZone(liste: Marche[], centre: { la: number; lo: number }, rayon: number, iso: string, jours: string[], filtre: Filtre = 'tous'): Saison {
+  const zone = liste.filter((m) => distanceKm(centre, m) <= rayon);
+  const ok = (d: string) => cherche(zone, centre, rayon, d, filtre).length > 0;
+  if (ok(iso)) return { etat: 'ouvert' };
+  const ouverts = jours.filter(ok);
+  if (!ouverts.length) return { etat: 'inconnu' };
+  const apres = ouverts.find((d) => d > iso);
+  if (!apres) return { etat: 'fini', le: ouverts[ouverts.length - 1] };
+  return ouverts[0] > iso ? { etat: 'avant', le: apres } : { etat: 'ferme', le: apres };
+}

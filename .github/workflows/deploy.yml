@@ -1,17 +1,21 @@
-name: deploy
+name: DATAtourisme update and deploy
 
-# Publie le site sur GitHub Pages à chaque push sur main, et après chaque passe de update-data
-# (un push fait avec GITHUB_TOKEN ne relance pas les workflows, d'où workflow_run).
+# Export quotidien DATAtourisme (Licence Ouverte 2.0, publié vers 11 h UTC) : d'octobre à janvier, chaque jour
+# à 12 h 40 UTC ; le reste de l'année, chaque lundi. scripts/update-data.sh télécharge l'export et les communes
+# (geo.api.gouv.fr), relance scripts/import-datatourisme.py au jour de Paris (les marchés terminés sortent),
+# puis le site est reconstruit et publié.
+# Ce workflow est le seul qui publie le site : push sur main, tâche planifiée et lancement manuel.
+# Modèle : canadaprocessingtimes.com/.github/workflows/update-data.yml (RECETTE, sites à données datées).
 on:
+  schedule:
+    - cron: "40 12 * 1,10,11,12 *"
+    - cron: "40 12 * 2-9 1"
   push:
     branches: [main]
-  workflow_run:
-    workflows: [update-data]
-    types: [completed]
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -21,18 +25,49 @@ concurrency:
 
 jobs:
   build:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-      - run: npm ci --legacy-peer-deps
-      - run: npm run build
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Read DATAtourisme (scheduled and manual runs)
+        if: github.event_name != 'push'
+        run: npm run update-data
+
+      - name: Tests
+        run: npx vitest run
+
+      - name: Build
+        run: npm run build
+
+      - name: Commit the new readings
+        id: commit
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/marches.json src/data/villes.json src/data/import-stats.json public/data/marches.json
+          if git diff --cached --quiet; then echo "changed=false" >> "$GITHUB_OUTPUT"; else
+            git commit -m "Marchés de Noël relus dans DATAtourisme le $(date -u +%F)" && git push && echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -47,7 +82,9 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
       - name: Checkout (script IndexNow)
+        if: github.event_name != 'schedule' || needs.build.outputs.changed == 'true'
         uses: actions/checkout@v4
       - name: Ping IndexNow
+        if: github.event_name != 'schedule' || needs.build.outputs.changed == 'true'
         continue-on-error: true
         run: bash scripts/indexnow.sh https://quelmarchedenoel.fr

@@ -41,7 +41,7 @@ export const ville = (nom: string) => { const v = VILLES.find((x) => x.n === nom
 export const autour = (c: { la: number; lo: number }, km: number, liste = MARCHES) => liste.filter((m) => distanceKm(c, m) <= km);
 export const dansCommune = (insee: string) => MARCHES.filter((m) => m.insee === insee);
 
-/** Ce que lit le chercheur dans le navigateur (mêmes clés que public/data/marches.json). */
+/** Ce que lit le moteur de recherche dans le navigateur (mêmes clés que public/data/marches.json). */
 export const leger = (l: Marche[]) => l.map(({ id, n, c, d, la, lo, o, h, f, w }) => ({ id, n, c, d, la, lo, o, h, f, w }));
 /** Villes de départ proposées : celles de la zone, plus les grandes villes si `toutes`. */
 export const villesProches = (c: { la: number; lo: number }, km: number) => VILLES.filter((v) => distanceKm(c, v) <= km);

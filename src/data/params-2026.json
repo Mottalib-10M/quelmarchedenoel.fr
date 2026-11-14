@@ -6,7 +6,7 @@
  "valid_to": "2027-01-10",
  "datatourisme": { "export": "evenements.json.gz", "taille_octets": 100708070, "derniere_modification": "2026-11-12", "licence": "Licence Ouverte Etalab 2.0" },
  "sources": {
-  "datagouv": { "url": "https://www.data.gouv.fr/datasets/donnees-touristiques-de-la-base-datatourisme", "label": { "fr": "data.gouv.fr : données touristiques de la base DATAtourisme (Licence Ouverte), export du 12 novembre 2026", "en": "data.gouv.fr: tourism data from the DATAtourisme base (Licence Ouverte), export of 12 November 2026 (in French)" } },
+  "datagouv": { "url": "https://www.data.gouv.fr/datasets/donnees-touristiques-de-la-base-datatourisme", "label": { "fr": "data.gouv.fr : données touristiques de la base DATAtourisme (Licence Ouverte), export daté du 12 novembre 2026, lu le 13 novembre 2026", "en": "data.gouv.fr: tourism data from the DATAtourisme base (Licence Ouverte), export dated 12 November 2026, read on 13 November 2026 (in French)" } },
   "datatourisme": { "url": "https://www.datatourisme.fr/", "label": { "fr": "DATAtourisme, la base nationale des données des offices de tourisme (ADN Tourisme)", "en": "DATAtourisme, the national database of French tourist offices (ADN Tourisme, in French)" } },
   "licence": { "url": "https://www.etalab.gouv.fr/licence-ouverte-open-licence/", "label": { "fr": "Etalab : Licence Ouverte / Open Licence 2.0", "en": "Etalab: Licence Ouverte / Open Licence 2.0" } },
   "geoapi": { "url": "https://geo.api.gouv.fr/decoupage-administratif/communes", "label": { "fr": "geo.api.gouv.fr : centres et population des communes (points de départ)", "en": "geo.api.gouv.fr: town centres and population (starting points, in French)" } },

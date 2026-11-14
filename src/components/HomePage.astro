@@ -1,6 +1,6 @@
 ---
 /**
- * Accueil : le chercheur sur toute la France en tête, la réponse en un paragraphe replié, les six questions qui mènent
+ * Accueil : le moteur de recherche sur toute la France en tête, la réponse en un paragraphe replié, les six questions qui mènent
  * chacune à sa page, la saison en chiffres, les régions, les explications en accordéons, toutes les pages.
  * Texte : src/content/home.ts.
  */
@@ -35,6 +35,7 @@ const regions = REGIONS.map((r) => { const l = MARCHES.filter((m) => r.deps.incl
     <div class="mt-1 text-xs font-medium uppercase tracking-wide text-navy-500">{ui.independent}</div>
   </header>
   <div id="simulateur" data-outil data-chrome class="scroll-mt-20"><Tool arg={{ ville: '67482', rayon: 30, zone: 40 }} lang={lang} idPrefix="home" complet /></div>
+  <p class="mt-2 text-sm text-navy-700" data-chrome>{x.couverture}</p>
   <p class="mt-2 text-sm text-navy-600" data-chrome>{ui.privacyLine}</p>
   <Clamp text={x.resume} lang={lang} id="clamp-home" class="my-8" />
   <section class="mt-8" aria-labelledby="questions-h" data-chrome>
@@ -44,6 +45,18 @@ const regions = REGIONS.map((r) => { const l = MARCHES.filter((m) => r.deps.incl
         <li><a href={route(q.id, lang)} class="block h-full rounded-lg border-2 border-accent-500 bg-white px-4 py-3 hover:bg-accent-50"><span class="font-semibold text-accent-700">{q.q} →</span><span class="mt-1 block text-sm text-navy-700">{q.a}</span></a></li>
       ))}
     </ul>
+  </section>
+  <section class="mt-10" data-chrome>
+    <h2 class="text-2xl font-bold text-navy-900">{x.guidesTitle}</h2>
+    {GROUPS.map((g) => (
+      <div class="mt-5">
+        <h3 class="text-lg font-semibold text-navy-900">{g.label[lang]}</h3>
+        <ul class="mt-2 grid gap-2 text-sm md:grid-cols-3">
+          {GUIDES.filter((p) => p.group === g.id && hasRoute(p.id, lang)).map((p) => <li><a href={route(p.id, lang)} class="block h-full rounded-lg border border-navy-200 px-3 py-2 hover:border-accent-300 hover:bg-accent-50"><span class="font-semibold text-accent-700 underline underline-offset-2">{p[lang].nav} →</span><span class="block text-navy-600">{p[lang].card}</span></a></li>)}
+        </ul>
+      </div>
+    ))}
+    <p class="mt-6 text-sm text-navy-700"><a href={route('method', lang)} class="font-medium text-accent-700 underline">{L('D\'où viennent les dates et comment le moteur de recherche calcule', 'Where the dates come from and how the finder works')}</a> · <a href={route('about', lang)} class="font-medium text-accent-700 underline">{L('Qui publie ce site', 'Who publishes this site')}</a></p>
   </section>
   <section class="mt-10">
     <h2 class="text-2xl font-bold text-navy-900">{x.chiffresTitle}</h2>
@@ -57,6 +70,7 @@ const regions = REGIONS.map((r) => { const l = MARCHES.filter((m) => r.deps.incl
   </section>
   <section class="mt-10">
     <h2 class="text-2xl font-bold text-navy-900">{x.regionsTitle}</h2>
+    <p class="mt-2 text-sm text-navy-700">{x.regionsNote}</p>
     <div class="mt-4 overflow-x-auto">
       <table class="journal w-full text-sm empile">
         <thead><tr>{[L('Région', 'Region'), L('Marchés', 'Markets'), L('Avec horaires', 'With hours'), L('Ouverts le 5 déc.', 'Open 5 Dec'), L('Ouverts après Noël', 'Open after Christmas')].map((th, i) => <th scope="col" class={`px-3 py-2 font-semibold text-navy-900 ${i ? 'text-right' : 'text-left'}`}>{th}</th>)}</tr></thead>
@@ -70,7 +84,6 @@ const regions = REGIONS.map((r) => { const l = MARCHES.filter((m) => r.deps.incl
           </tr>))}</tbody>
       </table>
     </div>
-    <p class="mt-2 text-sm text-navy-600">{x.regionsNote}</p>
   </section>
   <section class="mt-10">
     <h2 class="text-2xl font-bold text-navy-900">{x.foldTitle}</h2>
@@ -82,17 +95,5 @@ const regions = REGIONS.map((r) => { const l = MARCHES.filter((m) => r.deps.incl
         </details>
       ))}
     </div>
-  </section>
-  <section class="mt-10" data-chrome>
-    <h2 class="text-2xl font-bold text-navy-900">{x.guidesTitle}</h2>
-    {GROUPS.map((g) => (
-      <div class="mt-5">
-        <h3 class="text-lg font-semibold text-navy-900">{g.label[lang]}</h3>
-        <ul class="mt-2 grid gap-2 text-sm md:grid-cols-3">
-          {GUIDES.filter((p) => p.group === g.id && hasRoute(p.id, lang)).map((p) => <li><a href={route(p.id, lang)} class="block h-full rounded-lg border border-navy-200 px-3 py-2 hover:border-accent-300 hover:bg-accent-50"><span class="font-semibold text-accent-700 underline underline-offset-2">{p[lang].nav} →</span><span class="block text-navy-600">{p[lang].card}</span></a></li>)}
-        </ul>
-      </div>
-    ))}
-    <p class="mt-6 text-sm text-navy-700"><a href={route('method', lang)} class="font-medium text-accent-700 underline">{L('D\'où viennent les dates et comment le chercheur calcule', 'Where the dates come from and how the finder works')}</a> · <a href={route('about', lang)} class="font-medium text-accent-700 underline">{L('Qui publie ce site', 'Who publishes this site')}</a></p>
   </section>
 </PageLayout>

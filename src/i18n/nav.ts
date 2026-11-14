@@ -3,7 +3,7 @@ import { GUIDES, guideById } from '../lib/pages';
 import type { Group } from '../lib/page-types';
 export interface NavLink { href: string; label: string } export interface NavCategory { label: string; links: NavLink[] }
 const CORE: Record<Locale, Record<string, string>> = {
-  fr: { home: 'Marchés ouverts près de chez vous', method: 'Méthode et données', about: 'À propos', widget: 'Intégrer le chercheur', contact: 'Contact', editorial: 'Politique éditoriale', privacy: 'Confidentialité', terms: 'Mentions légales', cookies: 'Cookies' },
+  fr: { home: 'Marchés ouverts près de chez vous', method: 'Méthode et données', about: 'À propos', widget: 'Intégrer le moteur de recherche', contact: 'Contact', editorial: 'Politique éditoriale', privacy: 'Confidentialité', terms: 'Mentions légales', cookies: 'Cookies' },
   en: { home: 'Markets open near you', method: 'Method and data', about: 'About', widget: 'Embed the finder', contact: 'Contact', editorial: 'Editorial policy', privacy: 'Privacy', terms: 'Legal notice', cookies: 'Cookies' },
 };
 export const GROUPS: Array<{ id: Group; label: Record<Locale, string> }> = [
@@ -17,7 +17,8 @@ export const inGroup = (g: Group, lang: Locale): NavLink[] => GUIDES.filter((p) 
 export function navCategories(lang: Locale): NavCategory[] {
   return GROUPS.map((g) => ({ label: g.label[lang], links: inGroup(g.id, lang) })).filter((c) => c.links.length);
 }
-export const navDirect = (lang: Locale): NavLink[] => [link('method', lang)];
+/** Menu : un lien direct vers le moteur de recherche de l'accueil (testeurs du 2026-11-14 : pas de retour au moteur sans le logo). */
+export const navDirect = (lang: Locale): NavLink[] => [{ href: `${route('home', lang)}#simulateur`, label: lang === 'fr' ? 'Chercher un marché' : 'Find a market' }, link('method', lang)];
 export const footerColumns = (lang: Locale): NavCategory[] => {
   const site = { label: { fr: 'Ce site', en: 'This site' }[lang], links: ['home', 'method', 'about', 'contact', 'editorial', 'widget', 'terms', 'privacy', 'cookies'].map((i) => link(i, lang)) };
   return [...navCategories(lang), site];
