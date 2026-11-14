@@ -1,6 +1,6 @@
 {
- "lu_le": "2026-11-13",
- "note": "Adresses citées par des fiches DATAtourisme qui répondaient 404 ou 410 le 13 novembre 2026 (scripts/check-sources.mjs) : le nom du marché reste, sans lien.",
+ "lu_le": "2026-11-14",
+ "note": "Adresses citées par des fiches DATAtourisme qui répondaient 404 ou 410 les 13 et 14 novembre 2026 (scripts/check-sources.mjs) : le nom du marché reste, sans lien.",
  "urls": [
   "http://cafedelaforge.com/",
   "http://comite-des-fetes-le-poinconnet.blog4ever.com/",
@@ -8,6 +8,7 @@
   "https://sortir.grandpoitiers.fr/agenda/le-marche-de-noel-de-poitiers-et-sa-grande-roue-55229",
   "http://www.mairie-blagnac.fr/actualites/actualite/marche-de-noel-2025-au-parc-des-ramiers-animations-chalets-et-illuminations",
   "https://www.sargeleslemans.fr/sarge-les-le-mans-marche-de-noel",
-  "https://saintjeandhermine.fr/evenements/marche-de-noel-pour-le-telethon/"
+  "https://saintjeandhermine.fr/evenements/marche-de-noel-pour-le-telethon/",
+  "https://lespresdeugenie.com/noel-les-fetes-de-fin-dannee-2026-a-eugenie/"
  ]
 }
