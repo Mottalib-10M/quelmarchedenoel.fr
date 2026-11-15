@@ -135,3 +135,6 @@ p[id$="-help"]:not([role="status"]), [data-fixe], [data-actuellement], [aria-liv
 :lang(en) .fold[open] > summary::after { content: "Hide \25B4"; }
 .fold > summary:hover { background: var(--color-accent-50); border-radius: .5rem; }
 .fold > div { padding: 0 1rem .5rem; }
+
+/* Champs en subgrid : quand le formulaire est étiré à la hauteur du résultat voisin, ses rangées ne doivent pas s'étirer (trous entre libellé, case et aide). */
+:where(form, div, fieldset):has(> .grid-rows-subgrid) { align-content: start; }
