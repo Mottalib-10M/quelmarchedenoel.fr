@@ -7,7 +7,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import SelectField from '../ui/SelectField';
 import { ResultCard, Rows, ShareRow } from '../calc/parts';
-import { cherche, distanceKm, etatA, saisonDe, prochainJourZone, ecartJours, type Filtre, type Marche, type Saison } from '../../lib/engine/marches';
+import { cherche, distanceKm, etatA, enAvant, fermeA, saisonDe, prochainJourZone, ecartJours, type Filtre, type Marche, type Saison } from '../../lib/engine/marches';
 import { jourCourt, jourLong, heure, plage } from '../../lib/dates';
 import { readParams, updateURL } from '../../lib/url-state';
 import { t } from '../../i18n/ui';
@@ -74,7 +74,8 @@ export default function Finder({ lang, marches, villes, ville: v0, rayon: r0 = 3
   const estAuj = today !== '' && jour === today;
   const soirN = res.filter((r) => r.c.some(([, b]) => b >= '20:00' || b === '00:00')).length;
   const horN = res.filter((r) => r.c.length).length;
-  const p = res[0];
+  // Le jour même, le plus proche déjà fermé cède la place au plus proche encore ouvert (testeurs, tour 2).
+  const { r: p, ferme: pf } = estAuj && now ? enAvant(res, jour, now) : { r: res[0], ferme: undefined };
   const maj = (x: string) => x.charAt(0).toUpperCase() + x.slice(1);
   // Avant l'ouverture, entre deux jours ou après la fermeture : dire quand le marché de la page ouvre (ou, sans marché
   // de page, le prochain jour avec un marché dans la zone) au lieu d'un « Aucun » sans suite.
@@ -94,15 +95,17 @@ export default function Finder({ lang, marches, villes, ville: v0, rayon: r0 = 3
     const e = etatA(m, jour, now);
     if (e.etat === 'ouvert') return T(`Ouvert jusqu'à ${heure(e.jusqua, lang)}`, `Open until ${e.jusqua}`);
     if (e.etat === 'plus-tard') return T(`Ouvre à ${heure(e.ouvre, lang)}`, `Opens at ${e.ouvre}`);
-    if (e.etat === 'termine') return T('Fermé pour aujourd\'hui', 'Closed for today');
+    // « Fermé pour aujourd'hui » se lisait « fermé toute la journée » sous un titre « ouverts » : on dit l'heure.
+    if (e.etat === 'termine') return e.a >= '17:00' || e.a < '06:00' ? T(`Fermé pour ce soir (fermeture à ${heure(e.a, lang)})`, `Closed for tonight (closed at ${e.a})`) : T(`Fermé pour la journée (fermeture à ${heure(e.a, lang)})`, `Closed for the day (closed at ${e.a})`);
     return '';
   };
   const label = T(`Marchés de Noël ouverts le ${jourLong(jour, lang)}, à moins de ${rayon} km ${pos ? 'de vous' : `de ${vObj.n}`}`, `Christmas markets open on ${jourLong(jour, lang)}, within ${rayon} km of ${pos ? 'you' : vObj.n}`);
   let value = res.length ? T(`${nf.format(res.length)} marché${res.length > 1 ? 's' : ''}`, `${nf.format(res.length)} market${res.length > 1 ? 's' : ''}`) : T('Aucun', 'None');
   let sub = p
-    ? [T(`Le plus proche : ${p.m.n} (${p.m.c}), à ${nf.format(p.km)} km`, `Nearest: ${p.m.n} (${p.m.c}), ${nf.format(p.km)} km away`),
+    ? [pf ? T(`Le plus proche encore ouvert : ${p.m.n} (${p.m.c}), à ${nf.format(p.km)} km`, `Nearest still open: ${p.m.n} (${p.m.c}), ${nf.format(p.km)} km away`) : T(`Le plus proche : ${p.m.n} (${p.m.c}), à ${nf.format(p.km)} km`, `Nearest: ${p.m.n} (${p.m.c}), ${nf.format(p.km)} km away`),
        p.c.length ? T(`Horaires ce jour-là : ${plage(p.c, lang)}`, `Hours that day: ${plage(p.c, lang)}`) : T('Horaires non publiés dans la fiche', 'Hours not published in the listing'),
-       estAuj && etatTxt(p.m) ? T(`Maintenant : ${etatTxt(p.m).toLowerCase()}`, `Right now: ${etatTxt(p.m).toLowerCase()}`) : ''].filter(Boolean).join('\n')
+       estAuj && etatTxt(p.m) ? T(`Maintenant : ${etatTxt(p.m).toLowerCase()}`, `Right now: ${etatTxt(p.m).toLowerCase()}`) : '',
+       pf ? T(`Le plus proche, ${pf.m.c} (${nf.format(pf.km)} km), a fermé à ${heure(fermeA(pf.m, jour), lang)}.`, `The nearest, ${pf.m.c} (${nf.format(pf.km)} km), closed at ${fermeA(pf.m, jour)}.`) : ''].filter(Boolean).join('\n')
     : '';
   let labelR = label;
   const autres = res.length ? T(`Ce jour-là, ${nf.format(res.length)} autre${res.length > 1 ? 's' : ''} marché${res.length > 1 ? 's' : ''} ouvert${res.length > 1 ? 's' : ''} à moins de ${rayon} km : voir la liste ci-dessous.`, `That day, ${nf.format(res.length)} other market${res.length > 1 ? 's are' : ' is'} open within ${rayon} km: see the list below.`) : '';

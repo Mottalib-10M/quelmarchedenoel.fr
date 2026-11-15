@@ -1,6 +1,6 @@
 /** Moteur des marchés : cas tirés de fiches réelles (export DATAtourisme du 12/11/2026, pages officielles lues le 13/11/2026). */
 import { describe, expect, it } from 'vitest';
-import { ouvertLe, creneaux, etatA, jourSemaine, distanceKm, cherche, ajouteJours, saisonDe, prochainJourZone } from '../src/lib/engine/marches';
+import { ouvertLe, creneaux, etatA, jourSemaine, distanceKm, cherche, ajouteJours, saisonDe, prochainJourZone, enAvant, type Marche } from '../src/lib/engine/marches';
 import { MARCHES, VILLES, STATS } from '../src/lib/data';
 const m = (insee: string, motif: string) => MARCHES.find((x) => x.insee === insee && x.n.includes(motif))!;
 
@@ -20,7 +20,7 @@ describe('Strasbourg (page de la Ville)', () => {
   it('état à une heure donnée', () => {
     expect(etatA(s, '2026-12-01', '10:00')).toEqual({ etat: 'plus-tard', ouvre: '11:30' });
     expect(etatA(s, '2026-12-01', '15:00')).toEqual({ etat: 'ouvert', jusqua: '21:00' });
-    expect(etatA(s, '2026-12-01', '21:30')).toEqual({ etat: 'termine' });
+    expect(etatA(s, '2026-12-01', '21:30')).toEqual({ etat: 'termine', a: '21:00' });
     expect(etatA(s, '2026-12-25', '15:00')).toEqual({ etat: 'ferme' });
   });
 });
@@ -75,4 +75,17 @@ describe('avant l\'ouverture, entre deux jours, après la fermeture (testeurs na
     if (s.etat === 'avant' || s.etat === 'ferme') { expect(s.le > '2026-11-14').toBe(true); expect(cherche(MARCHES, ams, 30, s.le).length).toBeGreaterThan(0); }
     else expect(s.etat).toBe('ouvert');
   });
+});
+
+describe('le jour même : mettre en avant le plus proche encore ouvert (tour 2 du 2026-11-14)', () => {
+  const mk = (id: string, ferme: string, la: number): Marche => ({ id, n: id, c: id, d: '67', la, lo: 7.5, o: [['2026-11-14', '2026-11-14', 127, '10:00', ferme]], h: [], f: null, w: '' });
+  const res = cherche([mk('Mutzig', '18:00', 48.55), mk('Wintershouse', '21:00', 48.6), mk('Boersch', '20:00', 48.65)], { la: 48.5, lo: 7.5 }, 50, '2026-11-14');
+  it('le plus proche a fermé : on montre le suivant encore ouvert, et le fermé à part', () => {
+    const e = enAvant(res, '2026-11-14', '19:00');
+    expect(e.r?.m.id).toBe('Wintershouse'); expect(e.ferme?.m.id).toBe('Mutzig');
+    expect(etatA(e.ferme!.m, '2026-11-14', '19:00')).toEqual({ etat: 'termine', a: '18:00' });
+  });
+  it('le plus proche est ouvert : rien ne change', () => { const e = enAvant(res, '2026-11-14', '15:00'); expect(e.r?.m.id).toBe('Mutzig'); expect(e.ferme).toBeUndefined(); });
+  it('tous fermés : le plus proche, sans doublon', () => { const e = enAvant(res, '2026-11-14', '22:00'); expect(e.r?.m.id).toBe('Mutzig'); expect(e.ferme).toBeUndefined(); });
+  it('aucun résultat', () => expect(enAvant([], '2026-11-14', '19:00')).toEqual({ r: undefined, ferme: undefined }));
 });

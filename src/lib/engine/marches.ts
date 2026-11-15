@@ -46,7 +46,7 @@ export function creneaux(m: Marche, iso: string): Creneau[] {
 /** Heure de fermeture la plus tardive du jour (« 21:00 »), ou « » si inconnue. */
 export const fermeA = (m: Marche, iso: string) => creneaux(m, iso).reduce((x, [, b]) => (b > x ? b : x), '');
 
-export type Etat = { etat: 'ouvert'; jusqua: string } | { etat: 'plus-tard'; ouvre: string } | { etat: 'termine' } | { etat: 'ferme' } | { etat: 'inconnu' };
+export type Etat = { etat: 'ouvert'; jusqua: string } | { etat: 'plus-tard'; ouvre: string } | { etat: 'termine'; a: string } | { etat: 'ferme' } | { etat: 'inconnu' };
 /** État à l'heure « HH:MM » du jour `iso`. */
 export function etatA(m: Marche, iso: string, hhmm: string): Etat {
   if (!ouvertLe(m, iso)) return { etat: 'ferme' };
@@ -55,7 +55,7 @@ export function etatA(m: Marche, iso: string, hhmm: string): Etat {
   const en = c.find(([a, b]) => a <= hhmm && hhmm < (b === '00:00' ? '24:00' : b));
   if (en) return { etat: 'ouvert', jusqua: en[1] };
   const suivant = c.find(([a]) => a > hhmm);
-  return suivant ? { etat: 'plus-tard', ouvre: suivant[0] } : { etat: 'termine' };
+  return suivant ? { etat: 'plus-tard', ouvre: suivant[0] } : { etat: 'termine', a: c[c.length - 1][1] };
 }
 
 /** Jours d'ouverture entre deux dates (incluses). */
@@ -90,6 +90,16 @@ export function cherche(liste: Marche[], centre: { la: number; lo: number }, ray
     out.push({ m, km, c });
   }
   return out.sort((a, b) => a.km - b.km || a.m.n.localeCompare(b.m.n));
+}
+
+/**
+ * Le marché à mettre en avant le jour même à `hhmm` : le plus proche qui n'a pas fini sa journée (ouvert, ouvre plus
+ * tard ou horaires inconnus). `ferme` : le plus proche, sauté parce qu'il a déjà fermé. Tous fermés : le plus proche.
+ * Testeurs naïfs du 2026-11-14 (tour 2) : l'accueil mettait en avant Mutzig, fermé, avant Wintershouse, ouvert.
+ */
+export function enAvant(res: Resultat[], iso: string, hhmm: string): { r?: Resultat; ferme?: Resultat } {
+  const r = res.find((x) => etatA(x.m, iso, hhmm).etat !== 'termine') ?? res[0];
+  return { r, ferme: r && r !== res[0] ? res[0] : undefined };
 }
 
 /**
