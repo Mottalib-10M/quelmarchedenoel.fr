@@ -1,16 +1,16 @@
 {
  "export": "evenements.json.gz",
- "lu_le": "2026-11-17",
- "evenements": 66648,
- "marches": 2851,
- "datatourisme": 2849,
+ "lu_le": "2026-11-19",
+ "evenements": 68636,
+ "marches": 2970,
+ "datatourisme": 2968,
  "officiels": 2,
- "avec_horaires": 2358,
- "communes": 2436,
- "gratuits": 931,
+ "avec_horaires": 2459,
+ "communes": 2546,
+ "gratuits": 963,
  "exclus": {
-  "pas un marché": 39,
-  "terminé": 98
+  "pas un marché": 40,
+  "terminé": 95
  },
  "annee_corrigee": 1,
  "departements": {
@@ -28,6 +28,7 @@
   "03": "Allier",
   "83": "Var",
   "05": "Hautes-Alpes",
+  "77": "Seine-et-Marne",
   "82": "Tarn-et-Garonne",
   "74": "Haute-Savoie",
   "07": "Ardèche",
