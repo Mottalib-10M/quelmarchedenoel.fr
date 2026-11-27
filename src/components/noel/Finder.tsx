@@ -161,15 +161,20 @@ export default function Finder({ lang, marches, villes, ville: v0, rayon: r0 = 3
             options={opts([['tous', T('Tous les marchés ouverts ce jour-là', 'All markets open that day')], ['soir', T('Ouverts jusqu\'à 20 h ou plus tard', 'Open until 8pm or later')], ['gratuit', T('Entrée gratuite indiquée', 'Free entry stated')], ['horaires', T('Avec horaires publiés', 'With published hours')]])} />
           {geoMsg && <p className="sm:col-span-2 text-xs text-navy-600" role="status">{geoMsg}</p>}
         </form>
-        <ResultCard label={labelR} value={value} sub={sub}>
-          {cible && <button type="button" data-voir-jour onClick={() => setJour(cible)} className="mt-3 inline-flex min-h-11 items-center rounded-lg bg-accent-700 px-4 py-2 text-sm font-semibold text-white hover:bg-accent-800">{T(`Voir le ${jourLong(cible, lang).replace(/ \d{4}$/, '')}`, `Show ${jourLong(cible, lang).replace(/ \d{4}$/, '')}`)}</button>}
-          {res.length > 0 && <Rows rows={[
+        <div className="lg:row-span-2">
+          <ResultCard label={labelR} value={value} sub={sub}>
+            {cible && <button type="button" data-voir-jour onClick={() => setJour(cible)} className="mt-3 inline-flex min-h-11 items-center rounded-lg bg-accent-700 px-4 py-2 text-sm font-semibold text-white hover:bg-accent-800">{T(`Voir le ${jourLong(cible, lang).replace(/ \d{4}$/, '')}`, `Show ${jourLong(cible, lang).replace(/ \d{4}$/, '')}`)}</button>}
+            <ShareRow methodHref={methodHref} labels={ui} />
+          </ResultCard>
+        </div>
+        {/* détail sous le formulaire, la carte sur deux rangées : sinon grand vide à gauche ; sur mobile il suit la carte (revue à l'œil du 2026-11-28) */}
+        {res.length > 0 && <div className="max-w-md">
+          <Rows rows={[
             [T('Ouverts jusqu\'à 20 h ou plus', 'Open until 8pm or later'), nf.format(soirN)],
             [T('Avec horaires publiés', 'With published hours'), nf.format(horN)],
             [T('Point de départ', 'Starting point'), ou],
-          ]} />}
-          <ShareRow methodHref={methodHref} labels={ui} />
-        </ResultCard>
+          ]} />
+        </div>}
       </div>
       {res.length > 0 && (
         <div className="mt-4 overflow-x-auto">
