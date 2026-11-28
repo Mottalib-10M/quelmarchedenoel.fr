@@ -75,6 +75,17 @@ export function distanceKm(a: { la: number; lo: number }, b: { la: number; lo: n
   return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
 }
 
+const plat = (x: string) => x.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+/** Nom lisible (revue de l'éditeur du 2026-11-28) : dans les noms bruts DATAtourisme « Marché de Noël | Langeac », la partie
+ *  qui répète la commune tombe et les autres « | » deviennent « · » (« Le Grand Noël à Caen · Le Marché de Noël »). */
+export function nomAffiche(m: { n: string; c: string }): string {
+  const parts = m.n.split('|').map((x) => x.trim()).filter(Boolean);
+  const gardes = parts.filter((x) => plat(x) !== plat(m.c));
+  return (parts.length > 1 && gardes.length ? gardes : parts).join(' · ');
+}
+/** La commune se lit déjà dans le nom (« Marché de Noël de Colmar ») : inutile de la répéter entre parenthèses. */
+export const communeDansNom = (n: string, c: string) => ` ${plat(n)} `.includes(` ${plat(c)} `);
+
 export type Filtre = 'tous' | 'soir' | 'gratuit' | 'horaires';
 export interface Resultat { m: Marche; km: number; c: Creneau[] }
 /** Marchés ouverts le jour `iso` à moins de `rayon` km du point, triés par distance. `soir` : ferme à 20 h ou plus tard. */

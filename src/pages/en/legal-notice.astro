@@ -11,8 +11,8 @@ const description = 'Publisher, editor in charge, host, no advice, intellectual 
      retoucher à la main : relancer le script. Un passage propre au site se garde entre
      les marqueurs site:debut et site:fin. */}
 <PageLayout title={title} description={description} lang={lang} noindex={true} breadcrumbs={[{ label: 'Legal notice' }]} showAuthor={false}>
+  <h1 slot="hero">Legal notice</h1>
   <div class="prose prose-slate max-w-none">
-    <h1>Legal notice</h1>
     <p>Information about the publisher and the conditions of use of {SITE_URL}.</p>
     <h2>Publisher</h2>
     <LegalIdentity lang={lang} />

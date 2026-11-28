@@ -6,8 +6,8 @@ import { displayDate } from '../../lib/format';
 const lang = 'en';
 ---
 <PageLayout title={`Editorial policy of ${SITE_NAMES[lang]}: sources and errors`} description="Where the Christmas market dates and hours on Quel Marché de Noël come from, which source wins when they disagree, and how a reported mistake is checked and corrected." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <h1 slot="hero">Editorial policy</h1>
   <div class="prose prose-slate max-w-none">
-    <h1>Editorial policy</h1>
     <p>A wrong date means a wasted trip. This page says where each piece of information comes from and what happens when it is wrong.</p>
     <h2>Who is responsible</h2><p>{AUTHOR_NAME} is responsible for the content and the finder. Contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
     <h2>Sources, in order</h2>

@@ -14,8 +14,8 @@ const n = (x: number) => formatNumber(x, 0, lang);
 const off = MARCHES.filter((m) => m.src === 'off').map((m) => m.c).join(' and ');
 ---
 <PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: 'Method', description, path, lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Method', path }])]} breadcrumbs={[{ label: 'Method' }]}>
+  <h1 slot="hero">Quel Marché de Noël method: where the dates come from</h1>
   <article class="prose prose-slate max-w-none">
-    <h1>Quel Marché de Noël method: where the dates come from</h1>
     <p>The Quel Marché de Noël method starts from the public export of <Fragment set:html={s('datatourisme', 'DATAtourisme')} />, downloaded from <Fragment set:html={s('datagouv', 'data.gouv.fr')} /> and read on {displayDate(STATS.lu_le, 'en-GB')}: {n(STATS.evenements)} events entered by French tourist offices, of which we keep those whose name speaks of a Christmas market, village or "féerie" and that are not over. That leaves {n(STATS.datatourisme)} listings in {n(STATS.communes)} towns, plus {n(STATS.officiels)} markets read on their city's official page ({off}), which are missing from the base.</p>
     <div class="not-prose text-xs font-medium uppercase tracking-wide text-navy-500">Independent site: not a tourist office or an organiser</div>
     <h2>Open or closed on a given day</h2>

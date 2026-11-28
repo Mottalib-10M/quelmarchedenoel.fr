@@ -7,8 +7,8 @@ const lang = 'en';
 const description = 'Write to us if a Christmas market date, opening time or place looks wrong, if a market is missing, or to embed the finder. We do not rent stalls or sell tickets.';
 ---
 <PageLayout title={`Contact ${SITE_NAMES[lang]}: report a mistake`} description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Contact', description, path: route('contact', lang), lang })]} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <h1 slot="hero">Contact</h1>
   <div class="prose prose-slate max-w-none">
-    <h1>Contact</h1>
     <p>Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
     <h2>A wrong date or time, a missing market</h2>
     <p>Tell us the market, the town and, if you can, the organiser's page with the right information. We check at the source before changing anything. An organiser can also correct its listing with its tourist office: it is picked up at the next update.</p>

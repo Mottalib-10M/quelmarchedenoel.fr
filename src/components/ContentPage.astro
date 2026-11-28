@@ -25,14 +25,14 @@ const related = page.related.filter((id) => hasRoute(id, lang)).map((id) => ({ h
 const sources = sourceList(page.sources, lang);
 ---
 <PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={x.faqs} related={related} sources={sources} breadcrumbs={[{ label: group.label[lang] }, { label: x.nav }]}>
+  <header slot="hero">
+    <h1 class="text-[1.7rem] font-bold text-navy-900 max-sm:leading-tight sm:text-3xl md:text-4xl">{x.h1}</h1>
+    <p class="mt-2 text-base text-navy-700 sm:text-lg">{x.intro}</p>
+    <div class="mt-1 text-xs font-medium uppercase tracking-wide text-navy-500">{ui.independent}</div>
+    <p data-chrome class="mt-1 text-sm"><a href={`${route('home', lang)}#simulateur`} class="font-medium text-accent-700 underline">{lang === 'fr' ? 'Partout en France, autour de chez vous ou de votre position : le moteur de recherche de l\'accueil →' : 'Anywhere in France, around your town or your location: the home page finder →'}</a></p>
+  </header>
   <article>
-    <header class="mb-4">
-      <h1 class="text-[1.7rem] font-bold text-navy-900 max-sm:leading-tight sm:text-3xl md:text-4xl">{x.h1}</h1>
-      <p class="mt-2 text-base text-navy-700 sm:text-lg">{x.intro}</p>
-      <div class="mt-1 text-xs font-medium uppercase tracking-wide text-navy-500">{ui.independent}</div>
-      <p data-chrome class="mt-1 text-sm"><a href={`${route('home', lang)}#simulateur`} class="font-medium text-accent-700 underline">{lang === 'fr' ? 'Partout en France, autour de chez vous ou de votre position : le moteur de recherche de l\'accueil →' : 'Anywhere in France, around your town or your location: the home page finder →'}</a></p>
-    </header>
-    <div data-outil data-chrome class="mb-4"><Tool arg={page.outil} lang={lang} idPrefix={`p${page.order}`} /></div>
+    <div data-outil data-outil-tete data-chrome class="mb-4"><Tool arg={page.outil} lang={lang} idPrefix={`p${page.order}`} /></div>
     {/* La date de relecture n'est plus répétée ici : le bloc éditeur et le pied de page la donnent (testeurs du 2026-11-10). */}
     <p class="mb-6 text-sm text-navy-600">{ui.reviewedBy} <a href={route('about', lang)} class="underline hover:text-navy-900">{AUTHOR_NAME}</a> · <a href={route('method', lang)} class="underline hover:text-navy-900">{label('method', lang)}</a></p>
     <Clamp text={x.resume} lang={lang} id={`clamp-${page.id}`} class="mb-8" />

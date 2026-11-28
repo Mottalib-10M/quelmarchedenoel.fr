@@ -15,8 +15,8 @@ const n = (x: number) => formatNumber(x, 0, lang);
 const off = MARCHES.filter((m) => m.src === 'off').map((m) => m.c).join(' et ');
 ---
 <PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: 'Méthode', description, path, lang }), breadcrumbSchema([{ name: 'Accueil', path: route('home', lang) }, { name: 'Méthode', path }])]} breadcrumbs={[{ label: 'Méthode' }]}>
+  <h1 slot="hero">Méthode de Quel Marché de Noël : d'où viennent les dates</h1>
   <article class="prose prose-slate max-w-none">
-    <h1>Méthode de Quel Marché de Noël : d'où viennent les dates</h1>
     <p>La méthode de Quel Marché de Noël part de l'export public de <Fragment set:html={s('datatourisme', 'DATAtourisme')} />, téléchargé sur <Fragment set:html={s('datagouv', 'data.gouv.fr')} /> et lu le {displayDate(STATS.lu_le, 'fr-FR')} : {n(STATS.evenements)} événements publiés par les offices de tourisme, dont nous gardons ceux dont le nom parle d'un marché, d'un village ou d'une féerie de Noël et qui ne sont pas terminés. Restent {n(STATS.datatourisme)} fiches dans {n(STATS.communes)} communes, plus {n(STATS.officiels)} marchés relus sur la page officielle de leur ville ({off}), absents de la base.</p>
     <div class="not-prose text-xs font-medium uppercase tracking-wide text-navy-500">Site indépendant : ni office de tourisme, ni organisateur</div>
     <h2>Ouvert ou fermé tel jour</h2>

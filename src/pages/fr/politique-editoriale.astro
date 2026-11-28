@@ -6,8 +6,8 @@ import { displayDate } from '../../lib/format';
 const lang = 'fr';
 ---
 <PageLayout title={`Politique éditoriale de ${SITE_NAMES[lang]} : sources et erreurs`} description="D'où viennent les dates et horaires des marchés de Noël de Quel Marché de Noël, dans quel ordre les sources font foi, et comment une erreur signalée est vérifiée puis corrigée." lang={lang} noindex={true} breadcrumbs={[{ label: 'Politique éditoriale' }]} showAuthor={false}>
+  <h1 slot="hero">Politique éditoriale</h1>
   <div class="prose prose-slate max-w-none">
-    <h1>Politique éditoriale</h1>
     <p>Une date fausse fait faire un trajet pour rien. Cette page dit d'où vient chaque information et ce qui se passe quand elle est fausse.</p>
     <h2>Responsable</h2><p>{AUTHOR_NAME} répond du contenu et du moteur de recherche. Contact : <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
     <h2>Sources, par ordre</h2>

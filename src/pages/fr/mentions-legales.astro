@@ -11,8 +11,8 @@ const description = 'Éditeur, directeur de la publication, hébergeur, absence 
      retoucher à la main : relancer le script. Un passage propre au site se garde entre
      les marqueurs site:debut et site:fin. */}
 <PageLayout title={title} description={description} lang={lang} noindex={true} breadcrumbs={[{ label: 'Mentions légales' }]} showAuthor={false}>
+  <h1 slot="hero">Mentions légales</h1>
   <div class="prose prose-slate max-w-none">
-    <h1>Mentions légales</h1>
     <p>Informations publiées en application de l’article 6 III-1 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique.</p>
     <h2>Éditeur du site</h2>
     <LegalIdentity lang={lang} />

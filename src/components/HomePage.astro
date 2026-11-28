@@ -29,12 +29,12 @@ const n = (v: number) => formatNumber(v, 0, lang);
 const regions = REGIONS.map((r) => { const l = MARCHES.filter((m) => r.deps.includes(m.d)); return { r, l }; }).sort((a, b) => b.l.length - a.l.length);
 ---
 <PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={x.faqs} sources={sources}>
-  <header class="mb-4">
+  <header slot="hero">
     <h1 class="text-[1.7rem] font-bold text-navy-900 max-sm:leading-tight sm:text-3xl md:text-4xl">{x.h1}</h1>
     <p class="mt-2 text-base text-navy-700 sm:text-lg">{x.intro}</p>
     <div class="mt-1 text-xs font-medium uppercase tracking-wide text-navy-500">{ui.independent}</div>
   </header>
-  <div id="simulateur" data-outil data-chrome class="scroll-mt-20"><Tool arg={{ ville: '67482', rayon: 30, zone: 40 }} lang={lang} idPrefix="home" complet /></div>
+  <div id="simulateur" data-outil data-outil-tete data-chrome class="scroll-mt-20"><Tool arg={{ ville: '67482', rayon: 30, zone: 40 }} lang={lang} idPrefix="home" complet /></div>
   <p class="mt-2 text-sm text-navy-700" data-chrome>{x.couverture}</p>
   <p class="mt-2 text-sm text-navy-600" data-chrome>{ui.privacyLine}</p>
   <Clamp text={x.resume} lang={lang} id="clamp-home" class="my-8" />

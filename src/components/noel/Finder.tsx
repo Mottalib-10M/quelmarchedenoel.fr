@@ -6,8 +6,8 @@
  */
 import { useEffect, useMemo, useState } from 'react';
 import SelectField from '../ui/SelectField';
-import { ResultCard, Rows, ShareRow } from '../calc/parts';
-import { cherche, distanceKm, etatA, enAvant, fermeA, saisonDe, prochainJourZone, ecartJours, type Filtre, type Marche, type Saison } from '../../lib/engine/marches';
+import { ResultCard, ShareRow } from '../calc/parts';
+import { cherche, distanceKm, etatA, enAvant, fermeA, nomAffiche, communeDansNom, saisonDe, prochainJourZone, ecartJours, type Filtre, type Marche, type Saison } from '../../lib/engine/marches';
 import { jourCourt, jourLong, heure, plage } from '../../lib/dates';
 import { readParams, updateURL } from '../../lib/url-state';
 import { t } from '../../i18n/ui';
@@ -101,8 +101,11 @@ export default function Finder({ lang, marches, villes, ville: v0, rayon: r0 = 3
   };
   const label = T(`Marchés de Noël ouverts le ${jourLong(jour, lang)}, à moins de ${rayon} km ${pos ? 'de vous' : `de ${vObj.n}`}`, `Christmas markets open on ${jourLong(jour, lang)}, within ${rayon} km of ${pos ? 'you' : vObj.n}`);
   let value = res.length ? T(`${nf.format(res.length)} marché${res.length > 1 ? 's' : ''}`, `${nf.format(res.length)} market${res.length > 1 ? 's' : ''}`) : T('Aucun', 'None');
+  // Distance en tête, insécable (« à 1 km » restait seul sur sa ligne) ; la commune n'est ajoutée que si le nom ne la dit pas.
+  const km = (x: number) => `${nf.format(x)}\u00a0km`;
+  const qui = (m: Marche) => { const n = nomAffiche(m); return communeDansNom(n, m.c) ? n : `${n} (${m.c})`; };
   let sub = p
-    ? [pf ? T(`Le plus proche encore ouvert : ${p.m.n} (${p.m.c}), à ${nf.format(p.km)} km`, `Nearest still open: ${p.m.n} (${p.m.c}), ${nf.format(p.km)} km away`) : T(`Le plus proche : ${p.m.n} (${p.m.c}), à ${nf.format(p.km)} km`, `Nearest: ${p.m.n} (${p.m.c}), ${nf.format(p.km)} km away`),
+    ? [pf ? T(`Le plus proche encore ouvert, à\u00a0${km(p.km)} : ${qui(p.m)}`, `Nearest still open, ${km(p.km)} away: ${qui(p.m)}`) : T(`Le plus proche, à\u00a0${km(p.km)} : ${qui(p.m)}`, `Nearest, ${km(p.km)} away: ${qui(p.m)}`),
        p.c.length ? T(`Horaires ce jour-là : ${plage(p.c, lang)}`, `Hours that day: ${plage(p.c, lang)}`) : T('Horaires non publiés dans la fiche', 'Hours not published in the listing'),
        estAuj && etatTxt(p.m) ? T(`Maintenant : ${etatTxt(p.m).toLowerCase()}`, `Right now: ${etatTxt(p.m).toLowerCase()}`) : '',
        pf ? T(`Le plus proche, ${pf.m.c} (${nf.format(pf.km)} km), a fermé à ${heure(fermeA(pf.m, jour), lang)}.`, `The nearest, ${pf.m.c} (${nf.format(pf.km)} km), closed at ${fermeA(pf.m, jour)}.`) : ''].filter(Boolean).join('\n')
@@ -167,14 +170,14 @@ export default function Finder({ lang, marches, villes, ville: v0, rayon: r0 = 3
             <ShareRow methodHref={methodHref} labels={ui} />
           </ResultCard>
         </div>
-        {/* détail sous le formulaire, la carte sur deux rangées : sinon grand vide à gauche ; sur mobile il suit la carte (revue à l'œil du 2026-11-28) */}
-        {res.length > 0 && <div className="max-w-md">
-          <Rows rows={[
-            [T('Ouverts jusqu\'à 20 h ou plus', 'Open until 8pm or later'), nf.format(soirN)],
+        {/* Détail sous le formulaire, sur toute sa largeur, en trois cases (revue de l'éditeur du 2026-11-28 : la liste de
+             3 lignes en max-w-md était plus étroite que le formulaire) ; la carte couvre les deux rangées. Sur mobile il suit la carte. */}
+        {res.length > 0 && <dl data-detail className="grid gap-2 sm:grid-cols-3">
+          {([[T('Ouverts jusqu\'à 20 h ou plus', 'Open until 8pm or later'), nf.format(soirN)],
             [T('Avec horaires publiés', 'With published hours'), nf.format(horN)],
-            [T('Point de départ', 'Starting point'), ou],
-          ]} />
-        </div>}
+            [T('Point de départ', 'Starting point'), ou]] as const).map(([k, v]) => (
+            <div key={k} className="flex items-baseline justify-between gap-3 rounded-lg border border-navy-200 px-3 py-2 text-sm sm:block"><dt className="text-navy-700">{k}</dt><dd className="font-semibold tabular-nums text-navy-900 sm:mt-0.5 sm:text-base">{v}</dd></div>))}
+        </dl>}
       </div>
       {res.length > 0 && (
         <div className="mt-4 overflow-x-auto">
@@ -184,7 +187,7 @@ export default function Finder({ lang, marches, villes, ville: v0, rayon: r0 = 3
             <thead><tr>{[T('Marché', 'Market'), T('Commune', 'Town'), T('Distance', 'Distance'), T('Horaires ce jour-là', 'Hours that day'), T('Itinéraire', 'Directions')].map((h) => <th key={h} scope="col" className="border-b border-navy-300 px-2 py-1.5 text-left font-semibold text-navy-900">{h}</th>)}</tr></thead>
             <tbody>{lignes.map((r) => { const e = etatTxt(r.m); return (
               <tr key={r.m.id}>
-                <td data-label={T('Marché', 'Market')} className="border-b border-navy-100 px-2 py-1.5 text-navy-900">{r.m.w ? <a href={r.m.w} target="_blank" rel="nofollow noopener noreferrer" className="text-accent-700 underline">{r.m.n}</a> : r.m.n}{r.m.f === 1 ? <span className="ml-1 text-xs text-navy-600">{T('· gratuit', '· free')}</span> : null}</td>
+                <td data-label={T('Marché', 'Market')} className="border-b border-navy-100 px-2 py-1.5 text-navy-900">{r.m.w ? <a href={r.m.w} target="_blank" rel="nofollow noopener noreferrer" className="text-accent-700 underline">{nomAffiche(r.m)}</a> : nomAffiche(r.m)}{r.m.f === 1 ? <span className="ml-1 text-xs text-navy-600">{T('· gratuit', '· free')}</span> : null}</td>
                 <td data-label={T('Commune', 'Town')} className="border-b border-navy-100 px-2 py-1.5 text-navy-800">{r.m.c}</td>
                 <td data-label={T('Distance', 'Distance')} className="tabular-nums whitespace-nowrap border-b border-navy-100 px-2 py-1.5 text-navy-800">{nf.format(r.km)} km</td>
                 <td data-label={T('Horaires ce jour-là', 'Hours that day')} className="border-b border-navy-100 px-2 py-1.5 text-navy-800"><span>{r.c.length ? plage(r.c, lang) : T('non publiés', 'not published')}{e ? <span className="block text-xs font-semibold text-accent-700">{e}</span> : null}</span></td>

@@ -89,3 +89,17 @@ describe('le jour même : mettre en avant le plus proche encore ouvert (tour 2 d
   it('tous fermés : le plus proche, sans doublon', () => { const e = enAvant(res, '2026-11-14', '22:00'); expect(e.r?.m.id).toBe('Mutzig'); expect(e.ferme).toBeUndefined(); });
   it('aucun résultat', () => expect(enAvant([], '2026-11-14', '19:00')).toEqual({ r: undefined, ferme: undefined }));
 });
+
+import { nomAffiche, communeDansNom } from '../src/lib/engine/marches';
+describe('nomAffiche', () => {
+  it('retire la commune répétée après « | » et remplace les autres « | »', () => {
+    expect(nomAffiche({ n: 'Marché de Noël | Langeac', c: 'Langeac' })).toBe('Marché de Noël');
+    expect(nomAffiche({ n: "Marché de Noël | Saint-Leu d'Esserent", c: "Saint-Leu-d'Esserent" })).toBe('Marché de Noël');
+    expect(nomAffiche({ n: 'Le Grand Noël à Caen | Le Marché de Noël', c: 'Caen' })).toBe('Le Grand Noël à Caen · Le Marché de Noël');
+    expect(nomAffiche({ n: 'Marché de Noël de Bayet', c: 'Bayet' })).toBe('Marché de Noël de Bayet');
+  });
+  it('voit la commune dans le nom', () => {
+    expect(communeDansNom('Marché de Noël de Dompierre-sur-Besbre', 'Dompierre-sur-Besbre')).toBe(true);
+    expect(communeDansNom('Marché de Noël', 'Caen')).toBe(false);
+  });
+});

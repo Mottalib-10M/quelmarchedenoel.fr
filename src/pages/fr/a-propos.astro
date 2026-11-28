@@ -12,8 +12,8 @@ const description = 'Radif Partners publie Quel Marché de Noël : un moteur de 
 const s = (k: string, t: string) => srcLink(k, lang, t);
 ---
 <PageLayout title={title} description={description} lang={lang} jsonLd={[profilePageSchema({ path, lang }), breadcrumbSchema([{ name: 'Accueil', path: route('home', lang) }, { name: 'À propos', path }])]} breadcrumbs={[{ label: 'À propos' }]}>
+  <h1 slot="hero">À propos de Quel Marché de Noël</h1>
   <article class="prose prose-slate max-w-none">
-    <h1>À propos de Quel Marché de Noël</h1>
     <p>{AUTHOR_DESC.fr}</p>
     <div class="not-prose text-xs font-medium uppercase tracking-wide text-navy-500">Site indépendant : ni office de tourisme, ni organisateur</div>
     <h2>Pourquoi ce site existe</h2>

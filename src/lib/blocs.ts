@@ -1,12 +1,12 @@
 /** Blocs de données des pages (tableaux et comptes), tirés de marches.json : aucun chiffre tapé à la main. */
 import { table, ext } from './table';
 import { MARCHES, SAISON, jours, depNom, region, ville as villeDe, VILLES, jourMois, jourCourt, plage } from './data';
-import { creneaux, distanceKm, ouvertLe, jourSemaine, joursOuverts, type Marche } from './engine/marches';
+import { creneaux, distanceKm, ouvertLe, jourSemaine, joursOuverts, nomAffiche, type Marche } from './engine/marches';
 import { formatNumber, type Lang } from './format';
 
 const T = (l: Lang, fr: string, en: string) => (l === 'fr' ? fr : en);
 const n = (x: number, l: Lang) => formatNumber(x, 0, l);
-const nom = (m: Marche) => (m.w ? ext(m.w, m.n) : m.n);
+const nom = (m: Marche) => (m.w ? ext(m.w, nomAffiche(m)) : nomAffiche(m));
 export const joursSaison = (m: Marche) => joursOuverts(m, SAISON.debut, SAISON.fin);
 const premier = (m: Marche) => joursSaison(m)[0] ?? m.o[0][0];
 const dernier = (m: Marche) => { const j = joursSaison(m); return j[j.length - 1] ?? m.o[0][1]; };
